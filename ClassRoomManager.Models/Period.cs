@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClassRoomManager.Data.Models
+namespace ClassRoomManager.Models
 {
     public class Period
     {

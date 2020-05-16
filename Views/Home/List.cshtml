@@ -1,0 +1,37 @@
+﻿@model ClassRoomManager.Models.ListViewModel
+
+@{
+    ViewData["Title"] = "List";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Students.First().ListNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Students.First().Name)</th>
+            <th>Calificación</th>
+            <th>Asistencia</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var student in Model.Students) {
+        <tr>
+            <th><button type="button">Detalles</button></th>
+            <td>@Html.DisplayFor(modelItem => student.ListNumber)</td>
+            <td>@Html.DisplayFor(modelItem => student.Name)</td>
+            <td><input type="number" min="0" max="10" step="1" /></td>
+            <td><input type="checkbox" /></td>
+        </tr>
+}
+    </tbody>
+</table>
+<button type="button">Crear Equipo</button>
+<ul>
+    @foreach (var team in Model.Teams)
+    {
+        <li>@team.Name</li>
+    }
+</ul>
+

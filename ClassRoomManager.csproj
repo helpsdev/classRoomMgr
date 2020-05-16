@@ -5,11 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Compile Remove="ClassRoomManager.Data\**" />
+    <Compile Remove="ClassRoomManager.Models\**" />
+    <Compile Remove="ClassRoomManager.Repositories.Test\**" />
+    <Content Remove="ClassRoomManager.Data\**" />
+    <Content Remove="ClassRoomManager.Models\**" />
+    <Content Remove="ClassRoomManager.Repositories.Test\**" />
+    <EmbeddedResource Remove="ClassRoomManager.Data\**" />
+    <EmbeddedResource Remove="ClassRoomManager.Models\**" />
+    <EmbeddedResource Remove="ClassRoomManager.Repositories.Test\**" />
+    <None Remove="ClassRoomManager.Data\**" />
+    <None Remove="ClassRoomManager.Models\**" />
+    <None Remove="ClassRoomManager.Repositories.Test\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="ClassRoomManager.Data\ClassRoomManager.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
