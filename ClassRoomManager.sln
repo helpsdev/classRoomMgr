@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassRoomManager", "ClassRoomManager.csproj", "{2966FD77-D2A0-4D0B-83F9-72B25BEA1543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassRoomManager", "ClassRoomManager.csproj", "{2966FD77-D2A0-4D0B-83F9-72B25BEA1543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassRoomManager.Data", "ClassRoomManager.Data\ClassRoomManager.Data.csproj", "{D98C8152-9982-44E7-BCDB-A5B2FE3DE255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2966FD77-D2A0-4D0B-83F9-72B25BEA1543}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2966FD77-D2A0-4D0B-83F9-72B25BEA1543}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2966FD77-D2A0-4D0B-83F9-72B25BEA1543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D98C8152-9982-44E7-BCDB-A5B2FE3DE255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D98C8152-9982-44E7-BCDB-A5B2FE3DE255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D98C8152-9982-44E7-BCDB-A5B2FE3DE255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D98C8152-9982-44E7-BCDB-A5B2FE3DE255}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
