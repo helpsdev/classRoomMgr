@@ -16,22 +16,48 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var student in Model.Students) {
-        <tr>
-            <th><button type="button">Detalles</button></th>
-            <td>@Html.DisplayFor(modelItem => student.ListNumber)</td>
-            <td>@Html.DisplayFor(modelItem => student.Name)</td>
-            <td><input type="number" min="0" max="10" step="1" /></td>
-            <td><input type="checkbox" /></td>
-        </tr>
-}
+        @foreach (var student in Model.Students)
+        {
+            <tr>
+                <th><button type="button">Detalles</button></th>
+                <td>@Html.DisplayFor(modelItem => student.ListNumber)</td>
+                <td>@Html.DisplayFor(modelItem => student.Name)</td>
+                <td><input type="number" min="0" max="10" step="1" /></td>
+                <td><input type="checkbox" /></td>
+            </tr>
+        }
     </tbody>
 </table>
-<button type="button">Crear Equipo</button>
+<button id="new-team" type="button">Crear Equipo</button>
+
+<form id="new-team-form" style="display:none;"  asp-route-groupId="1">
+    <label>Nombre:</label>
+    <input id="Name" name="Name" type="text" />
+    <label>Color:</label>
+    <input id="Color" name="Color" type="color" />
+    <button type="submit">Aceptar</button>
+    <button type="reset">Cancelar</button>
+</form>
+
 <ul>
-    @foreach (var team in Model.Teams)
-    {
-        <li>@team.Name</li>
-    }
+@foreach (var team in Model.Teams)
+{
+    <li>
+        <button type="button" id="team-name" data-team-id="@team.TeamId">@team.Name</button>
+    </li>
+}
 </ul>
+
+<vc:team-details team-id="1"></vc:team-details>
+
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("new-team").addEventListener("click", () => {
+                document.getElementById("new-team-form").style.display = "block";
+            });
+        });
+    </script>
+
+
 

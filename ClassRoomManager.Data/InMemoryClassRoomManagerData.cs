@@ -8,7 +8,13 @@ namespace ClassRoomManager.Repositories
 {
     public class InMemoryClassRoomManagerData : IClassRoomManagerData
     {
-        private IEnumerable<Group> Groups = new List<Group>
+        private IEnumerable<Group> Groups;
+        private IEnumerable<Student> Students;
+        private IList<Team> Teams;
+
+        public InMemoryClassRoomManagerData()
+        {
+            Groups = new List<Group>
             {
                 new Group
                 {
@@ -43,23 +49,44 @@ namespace ClassRoomManager.Repositories
                     TeamsList = default
                 }
             };
-        public IEnumerable<Student> Students = new List<Student>()
+
+            Students = new List<Student>()
+            {
+                new Student()
+                {
+                    GroupId = 1,
+                    ListNumber = 1,
+                    Name = "Edwin Perez",
+                    StudentId = 1
+                },
+                new Student()
+                {
+                    GroupId = 2,
+                    ListNumber = 1,
+                    Name = "Alicia Paredes",
+                    StudentId = 1
+                }
+            };
+            Teams = new List<Team>();
+        }
+
+        public int AddTeam(Team team)
         {
-            new Student()
+            if (team != null)
             {
-                GroupId = 1,
-                ListNumber = 1,
-                Name = "Edwin Perez",
-                StudentId = 1
-            },
-            new Student()
-            {
-                GroupId = 2,
-                ListNumber = 1,
-                Name = "Alicia Paredes",
-                StudentId = 1
+                try
+                {
+                    Teams.Add(team);
+                }
+                catch (Exception)
+                {
+                    return -1;
+                    
+                }
             }
-        };
+            return 1;
+        }
+
         public IEnumerable<Group> GetAllGroups()
         {
             return Groups;
@@ -78,6 +105,16 @@ namespace ClassRoomManager.Repositories
         public IEnumerable<Student> GetStudentsByGroupId(int groupId)
         {
             return Students.Where(s => s.GroupId == groupId);
+        }
+
+        public IEnumerable<Team> GetTeamsByGroupId(int groupId)
+        {
+            return Teams.Where(t => t.GroupId == groupId);
+        }
+
+        Team IClassRoomManagerData.GetTeamById(int teamId)
+        {
+            return Teams.Where(t => t.TeamId == teamId).FirstOrDefault();
         }
     }
 }

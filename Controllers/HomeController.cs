@@ -27,7 +27,30 @@ namespace ClassRoomManager.Controllers
             return View(new ListViewModel 
             {
                 Students = ClassRoomManagerData.GetStudentsByGroupId(groupId),
-                Teams = new List<Team>()
+                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
+            });
+        }
+        [Route("group/{groupId:int}")]
+        [HttpPost]
+        public IActionResult List(Team team, int groupId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ClassRoomManagerData.AddTeam(team);
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError("error", ex.Message);
+                }
+                
+            }
+            return View(new ListViewModel
+            {
+                Students = ClassRoomManagerData.GetStudentsByGroupId(groupId),
+                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
             });
         }
     }
