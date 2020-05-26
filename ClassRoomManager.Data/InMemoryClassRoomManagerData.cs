@@ -76,6 +76,7 @@ namespace ClassRoomManager.Repositories
             {
                 try
                 {
+                    team.TeamId = Teams.Count;
                     Teams.Add(team);
                 }
                 catch (Exception)

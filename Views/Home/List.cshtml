@@ -35,20 +35,22 @@
     <input id="Name" name="Name" type="text" />
     <label>Color:</label>
     <input id="Color" name="Color" type="color" />
+    <select name="StudentIdList" multiple>
+        @foreach (var student in Model.Students)
+        {
+            <option value="@student.StudentId">@student.Name</option>
+        }
+    </select>
     <button type="submit">Aceptar</button>
     <button type="reset">Cancelar</button>
 </form>
 
-<ul>
+
 @foreach (var team in Model.Teams)
 {
-    <li>
-        <button type="button" id="team-name" data-team-id="@team.TeamId">@team.Name</button>
-    </li>
+    <vc:team-details team-id="@team.TeamId"></vc:team-details>
 }
-</ul>
 
-<vc:team-details team-id="1"></vc:team-details>
 
 
     <script type="text/javascript">
