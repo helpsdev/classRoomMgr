@@ -11,6 +11,7 @@ namespace ClassRoomManager.Repositories
         private IEnumerable<Group> Groups;
         private IEnumerable<Student> Students;
         private IList<Team> Teams;
+        private IEnumerable<Note> Notes;
 
         public InMemoryClassRoomManagerData()
         {
@@ -68,6 +69,22 @@ namespace ClassRoomManager.Repositories
                 }
             };
             Teams = new List<Team>();
+            Notes = new List<Note>()
+            {
+                new Note()
+                {
+                    AssignedTo = Students.ElementAt(0),
+                    CreatedForGroup = Groups.ElementAt(0),
+                    CreationDate = DateTimeOffset.Now
+                },
+                new Note()
+                {
+                    AssignedTo = Students.ElementAt(1),
+                    CreatedForGroup = Groups.ElementAt(1),
+                    CreationDate = DateTimeOffset.Now
+                }
+            };
+
         }
 
         public int AddTeam(Team team)
@@ -93,9 +110,19 @@ namespace ClassRoomManager.Repositories
             return Groups;
         }
 
+        public IEnumerable<Note> GetAllNotes()
+        {
+            return Notes;
+        }
+
         public Group GetGroupById(int groupId)
         {
             return Groups.Where(g => g.GroupId == groupId).FirstOrDefault();
+        }
+
+        public IEnumerable<Note> GetNotesByGroupId(int groupId)
+        {
+            return Notes.Where(n => n.CreatedForGroup.GroupId == groupId);
         }
 
         public Student GetStudentById(int studentId)

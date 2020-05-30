@@ -14,5 +14,7 @@ namespace ClassRoomManager.Repositories
         int AddTeam(Team team);
         Team GetTeamById(int teamId);
         IEnumerable<Team> GetTeamsByGroupId(int groupId);
+        IEnumerable<Note> GetNotesByGroupId(int groupId);
+        IEnumerable<Note> GetAllNotes();
     }
 }

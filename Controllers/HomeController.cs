@@ -54,10 +54,16 @@ namespace ClassRoomManager.Controllers
             });
         }
 
-        public IActionResult Notes()
+        [Route("notes/{groupId?}")]
+        public IActionResult Notes(int groupId)
         {
+            IEnumerable<Note> notes;
+            if (groupId == 0)
+                notes = ClassRoomManagerData.GetAllNotes();
+            else
+                notes = ClassRoomManagerData.GetNotesByGroupId(groupId);
 
-            return View();
+            return View(notes);
         }
     }
 }
