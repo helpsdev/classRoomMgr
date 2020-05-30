@@ -53,5 +53,11 @@ namespace ClassRoomManager.Controllers
                 Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
             });
         }
+
+        public IActionResult Notes()
+        {
+
+            return View();
+        }
     }
 }
