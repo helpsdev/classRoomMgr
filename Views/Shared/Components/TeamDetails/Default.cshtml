@@ -7,9 +7,6 @@
     @Html.DisplayNameFor(model => model.Color)
     @Html.DisplayFor(model => model.Color)
 
-    @Html.DisplayNameFor(model => model.TeamId)
-    @Html.DisplayFor(model => model.TeamId)
-
     @Html.DisplayNameFor(model => model.GroupId)
     @Html.DisplayFor(model => model.GroupId)
     <ul>
@@ -18,4 +15,10 @@
             <li>@studentId</li>
         }
     </ul>
+    <label for="team-assistance">Asistencia</label>
+    <input type="checkbox" id="team-assistance" />
+    <label for="team-grades"></label>
+    <input type="number" id="team-grades" min="0" max="10" />
+    <button type="button">Asignar Calif</button>
+
 </div>

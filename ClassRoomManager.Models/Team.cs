@@ -14,5 +14,11 @@ namespace ClassRoomManager.Models
         public IEnumerable<Student> Students { get; set; }
         public int TeamId { get; set; }
         public int GroupId { get; set; }
+
+        public Team()
+        {
+            Students = new List<Student>();
+            StudentIdList = new List<int>();
+        }
     }
 }

@@ -18,13 +18,8 @@ namespace ClassRoomManager.ViewComponents
 
         public IViewComponentResult Invoke(int teamId)
         {
-            var items = GetTeamDetails(teamId);
-            return View(items);
-        }
-
-        private Team GetTeamDetails(int teamId)
-        {
-            return ClassRoomManagerData.GetTeamById(teamId);
+            var team = ClassRoomManagerData.GetTeamById(teamId);
+            return View(team);
         }
     }
 }
