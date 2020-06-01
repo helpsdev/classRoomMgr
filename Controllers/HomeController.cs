@@ -16,12 +16,13 @@ namespace ClassRoomManager.Controllers
             ClassRoomManagerData = classRoomManagerData;
         }
 
+        [Route("/")]
         public IActionResult Home()
         {
-            return Json(ClassRoomManagerData.GetAllGroups());
+            return View(ClassRoomManagerData.GetAllGroups());
         }
 
-        [Route("group/{groupId:int}")]
+        [Route("groups/{groupId:int}")]
         public IActionResult List(int groupId)
         {
             return View(new ListViewModel 
@@ -30,7 +31,7 @@ namespace ClassRoomManager.Controllers
                 Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
             });
         }
-        [Route("group/{groupId:int}")]
+        [Route("groups/{groupId:int}")]
         [HttpPost]
         public IActionResult List(Team team, int groupId)
         {
