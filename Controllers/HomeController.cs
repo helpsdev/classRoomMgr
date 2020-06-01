@@ -48,11 +48,7 @@ namespace ClassRoomManager.Controllers
                 }
                 
             }
-            return View(new ListViewModel
-            {
-                Students = ClassRoomManagerData.GetStudentsByGroupId(groupId),
-                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
-            });
+            return RedirectToAction("List", new { groupid = groupId });
         }
 
         [Route("notes/{groupId?}")]
@@ -65,6 +61,29 @@ namespace ClassRoomManager.Controllers
                 notes = ClassRoomManagerData.GetNotesByGroupId(groupId);
 
             return View(notes);
+        }
+        [Route("notes/{groupId:int}/create")]
+        public IActionResult Create(int groupId)
+        {
+            return View(ClassRoomManagerData.GetStudentsByGroupId(groupId));
+        }
+        [HttpPost]
+        public IActionResult Notes(Note note, int groupId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ClassRoomManagerData.AddNote(note);
+                }
+                catch (Exception ex)
+                {
+
+                    ModelState.AddModelError("error", ex.Message);
+                }
+
+            }
+            return RedirectToAction("Notes", new { groupid = note.CreatedForGroup.GroupId });
         }
     }
 }

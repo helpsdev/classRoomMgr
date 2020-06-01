@@ -1,0 +1,26 @@
+﻿@model IEnumerable<ClassRoomManager.Models.Student>
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Note</h4>
+<hr />
+<form asp-action="Create">
+    <select name="AssignedTo">
+        @foreach (var student in Model)
+        {
+            <option value="@student.StudentId">@student.Name</option>
+        }
+    </select>
+    <label for="note-description">Nota</label>
+    <input type="text" id="note-description" name="description" />
+    <button type="submit">Crear</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

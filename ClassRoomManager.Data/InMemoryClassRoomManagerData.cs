@@ -11,7 +11,7 @@ namespace ClassRoomManager.Repositories
         private IEnumerable<Group> Groups;
         private IEnumerable<Student> Students;
         private IList<Team> Teams;
-        private IEnumerable<Note> Notes;
+        private IList<Note> Notes;
 
         public InMemoryClassRoomManagerData()
         {
@@ -85,6 +85,24 @@ namespace ClassRoomManager.Repositories
                 }
             };
 
+        }
+
+        public int AddNote(Note note)
+        {
+            if (note != null)
+            {
+                try
+                {
+                    note.NoteId = Notes.Count();
+                    Notes.Add(note);
+                }
+                catch (Exception)
+                {
+                    return -1;
+
+                }
+            }
+            return 1;
         }
 
         public int AddTeam(Team team)
