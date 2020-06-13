@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClassRoomManager.Models.Note>
+﻿@model NotesViewModel
 
 @{
     ViewData["Title"] = "Notes";
@@ -6,32 +6,27 @@
 
 <h1>Notas</h1>
 
-<button type="button">Crear nota</button>
-<div>
-    <select>
-
-    </select>
-</div>
+<a asp-route="CreateNoteForm" asp-route-groupId="@Model.GroupId">Crear nota</a>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
+                CreationDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
+                ModifiedDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssignedTo.Name)
+                Nombre
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Notes) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CreationDate)
@@ -49,3 +44,5 @@
 }
     </tbody>
 </table>
+
+<a asp-action="Index">Back to Groups</a>

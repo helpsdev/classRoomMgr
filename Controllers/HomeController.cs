@@ -60,15 +60,22 @@ namespace ClassRoomManager.Controllers
             else
                 notes = ClassRoomManagerData.GetNotesByGroupId(groupId);
 
-            return View(notes);
+            var notesViewModel = new NotesViewModel()
+            {
+                Notes = notes,
+                GroupId = groupId
+            };
+
+            return View(notesViewModel);
         }
-        [Route("notes/{groupId:int}/create")]
+        [Route("notes/create/{groupId:int}", Name = "CreateNoteForm")]
         public IActionResult Create(int groupId)
         {
             return View(ClassRoomManagerData.GetStudentsByGroupId(groupId));
         }
         [HttpPost]
-        public IActionResult Notes(Note note, int groupId)
+        [Route("notes/create/{groupId:int}", Name = "CreateNote")]
+        public IActionResult Create(Note note, int groupId)
         {
             if (ModelState.IsValid)
             {
