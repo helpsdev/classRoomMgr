@@ -73,14 +73,14 @@ namespace ClassRoomManager.Repositories
             {
                 new Note()
                 {
-                    AssignedTo = Students.ElementAt(0),
-                    CreatedForGroup = Groups.ElementAt(0),
+                    StudentId = Students.ElementAt(0).StudentId,
+                    GroupId = Groups.ElementAt(0).GroupId,
                     CreationDate = DateTimeOffset.Now
                 },
                 new Note()
                 {
-                    AssignedTo = Students.ElementAt(1),
-                    CreatedForGroup = Groups.ElementAt(1),
+                    StudentId = Students.ElementAt(1).StudentId,
+                    GroupId = Groups.ElementAt(1).GroupId,
                     CreationDate = DateTimeOffset.Now
                 }
             };
@@ -140,7 +140,7 @@ namespace ClassRoomManager.Repositories
 
         public IEnumerable<Note> GetNotesByGroupId(int groupId)
         {
-            return Notes.Where(n => n.CreatedForGroup.GroupId == groupId);
+            return Notes.Where(n => n.GroupId == groupId);
         }
 
         public Student GetStudentById(int studentId)

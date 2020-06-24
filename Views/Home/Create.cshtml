@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClassRoomManager.Models.Student>
+﻿@model CreateNoteViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -8,9 +8,9 @@
 
 <h4>Note</h4>
 <hr />
-<form asp-route="CreateNote" asp-route-groupId="1" method="post">
-    <select name="AssignedTo">
-        @foreach (var student in Model)
+<form asp-route="CreateNote" asp-route-groupId="@Model.GroupId" method="post">
+    <select name="StudentId">
+        @foreach (var student in Model.Students)
         {
             <option value="@student.StudentId">@student.Name</option>
         }

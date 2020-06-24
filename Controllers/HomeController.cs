@@ -54,11 +54,9 @@ namespace ClassRoomManager.Controllers
         [Route("notes/{groupId?}")]
         public IActionResult Notes(int groupId)
         {
-            IEnumerable<Note> notes;
-            if (groupId == 0)
-                notes = ClassRoomManagerData.GetAllNotes();
-            else
-                notes = ClassRoomManagerData.GetNotesByGroupId(groupId);
+            IEnumerable<Note> notes = groupId == 0 
+                ? ClassRoomManagerData.GetAllNotes() 
+                : ClassRoomManagerData.GetNotesByGroupId(groupId);
 
             var notesViewModel = new NotesViewModel()
             {
@@ -71,7 +69,11 @@ namespace ClassRoomManager.Controllers
         [Route("notes/create/{groupId:int}", Name = "CreateNoteForm")]
         public IActionResult Create(int groupId)
         {
-            return View(ClassRoomManagerData.GetStudentsByGroupId(groupId));
+            var t = new CreateNoteViewModel(
+                ClassRoomManagerData.GetStudentsByGroupId(groupId),
+                groupId
+            );
+            return View(t);
         }
         [HttpPost]
         [Route("notes/create/{groupId:int}", Name = "CreateNote")]
@@ -90,7 +92,7 @@ namespace ClassRoomManager.Controllers
                 }
 
             }
-            return RedirectToAction("Notes", new { groupid = note.CreatedForGroup.GroupId });
+            return RedirectToAction("Notes", new { groupid = groupId });
         }
     }
 }
