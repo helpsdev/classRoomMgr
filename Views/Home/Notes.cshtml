@@ -40,6 +40,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StudentId)
             </td>
+            <td>
+                <a asp-route="EditNoteForm" asp-route-noteId="@item.NoteId">Edit</a>
+            </td>
         </tr>
 }
     </tbody>

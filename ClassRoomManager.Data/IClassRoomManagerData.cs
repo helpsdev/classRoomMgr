@@ -17,5 +17,7 @@ namespace ClassRoomManager.Repositories
         IEnumerable<Note> GetNotesByGroupId(int groupId);
         IEnumerable<Note> GetAllNotes();
         int AddNote(Note note);
+        Note GetNoteById(int noteId);
+        void UpdateNote(Note note);
     }
 }

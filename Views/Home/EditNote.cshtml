@@ -1,0 +1,39 @@
+﻿@model ClassRoomManager.Models.Note
+
+<h1>EditNote</h1>
+
+<h4>Note</h4>
+<hr />
+<form asp-action="EditNote" method="post">
+    <div class="form-group">
+        <label asp-for="GroupId" class="control-label"></label>
+        <input asp-for="GroupId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="CreationDate" class="control-label"></label>
+        <input asp-for="CreationDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ModifiedDate" class="control-label"></label>
+        <input asp-for="ModifiedDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="StudentId" class="control-label"></label>
+        <input asp-for="StudentId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NoteId" class="control-label"></label>
+        <input asp-for="NoteId" class="form-control" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" >Guardar</button>
+    </div>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

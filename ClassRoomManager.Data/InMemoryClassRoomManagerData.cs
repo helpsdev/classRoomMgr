@@ -75,13 +75,15 @@ namespace ClassRoomManager.Repositories
                 {
                     StudentId = Students.ElementAt(0).StudentId,
                     GroupId = Groups.ElementAt(0).GroupId,
-                    CreationDate = DateTimeOffset.Now
+                    CreationDate = DateTimeOffset.Now,
+                    NoteId = 0
                 },
                 new Note()
                 {
                     StudentId = Students.ElementAt(1).StudentId,
                     GroupId = Groups.ElementAt(1).GroupId,
-                    CreationDate = DateTimeOffset.Now
+                    CreationDate = DateTimeOffset.Now,
+                    NoteId = 1
                 }
             };
 
@@ -138,6 +140,21 @@ namespace ClassRoomManager.Repositories
             return Groups.Where(g => g.GroupId == groupId).FirstOrDefault();
         }
 
+        public Note GetNoteById(int noteId)
+        {
+            return Notes.Where(n => n.NoteId == noteId).FirstOrDefault();
+        }
+
+        public void UpdateNote(Note note)
+        {
+            if (Notes.Where(n => n.NoteId == note.NoteId).Any())
+            {
+                var currentNote = Notes.Where(n => n.NoteId == note.NoteId).First();
+                Notes.Remove(currentNote);
+                Notes.Add(note);
+            }
+        }
+
         public IEnumerable<Note> GetNotesByGroupId(int groupId)
         {
             return Notes.Where(n => n.GroupId == groupId);
@@ -157,6 +174,8 @@ namespace ClassRoomManager.Repositories
         {
             return Teams.Where(t => t.GroupId == groupId);
         }
+
+        
 
         Team IClassRoomManagerData.GetTeamById(int teamId)
         {

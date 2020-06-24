@@ -50,6 +50,31 @@ namespace ClassRoomManager.Controllers
             }
             return RedirectToAction("List", new { groupid = groupId });
         }
+        [Route("notes/edit/{noteId:int}", Name = "EditNoteForm")]
+        public IActionResult EditNote(int noteId)
+        {
+            return View(ClassRoomManagerData.GetNoteById(noteId));
+        }
+
+        [Route("notes/edit/{noteId:int}", Name = "EditNote")]
+        [HttpPost]
+        public IActionResult EditNote(Note note)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    ClassRoomManagerData.UpdateNote(note);
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+            }
+
+            return View(note);
+        }
 
         [Route("notes/{groupId?}")]
         public IActionResult Notes(int groupId)
