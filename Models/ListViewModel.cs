@@ -9,5 +9,6 @@ namespace ClassRoomManager.Models
     {
         public IEnumerable<Student> Students { get; set; }
         public IEnumerable<Team> Teams { get; set; }
+        public int GroupId { get; set; }
     }
 }

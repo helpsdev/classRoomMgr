@@ -28,7 +28,8 @@ namespace ClassRoomManager.Controllers
             return View(new ListViewModel 
             {
                 Students = ClassRoomManagerData.GetStudentsByGroupId(groupId),
-                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId)
+                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId),
+                GroupId = groupId
             });
         }
         [Route("groups/{groupId:int}")]
@@ -76,7 +77,7 @@ namespace ClassRoomManager.Controllers
             return View(note);
         }
 
-        [Route("notes/{groupId?}")]
+        [Route("notes/{groupId?}", Name = "Notes")]
         public IActionResult Notes(int groupId)
         {
             IEnumerable<Note> notes = groupId == 0 

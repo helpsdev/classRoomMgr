@@ -30,7 +30,7 @@
 </table>
 <button id="new-team" type="button">Crear Equipo</button>
 
-<form id="new-team-form" style="display:none;"  asp-route-groupId="1">
+<form id="new-team-form" style="display:none;"  asp-route-groupId="@Model.GroupId">
     <label>Nombre:</label>
     <input id="Name" name="Name" type="text" />
     <label>Color:</label>
@@ -51,6 +51,7 @@
     <vc:team-details team-id="@team.TeamId"></vc:team-details>
 }
 
+<vc:notes-sidebar group-id="@Model.GroupId"></vc:notes-sidebar>
 
 
     <script type="text/javascript">

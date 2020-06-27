@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Note>
+
+<div>
+    <label for="filter-notes">Filter:</label>
+    <input id="filter-notes" type="search"/>
+    <select>
+        <optgroup label="Type Search">
+            <option>Fecha de modificación</option>
+            <option>Nota</option>
+        </optgroup>
+    </select>
+    <button type="button"></button>
+    @foreach (var item in Model)
+    {
+        <div>
+            <p>@item.ModifiedDate</p>
+            <p>@item.GroupId - @item.StudentId</p>
+            <p>@item.Description</p>
+        </div>
+    }
+</div>
+
