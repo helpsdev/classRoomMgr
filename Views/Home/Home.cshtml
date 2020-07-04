@@ -28,8 +28,8 @@
                 @Html.DisplayFor(modelItem => item.GroupId)
             </td>
             <td>
-                <a asp-action="Notes" asp-route-groupid="@item.GroupId">Notas</a>
-                <a asp-action="List" asp-route-groupid="@item.GroupId">Grupo(Lista)</a>
+                <a asp-route="Notes" asp-route-groupid="@item.GroupId">Notas</a>
+                <a asp-route="GroupList" asp-route-groupid="@item.GroupId">Grupo(Lista)</a>
             </td>
         </tr>
 }
