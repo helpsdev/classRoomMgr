@@ -25,13 +25,11 @@ namespace ClassRoomManager.Repositories
                     {
                         new Student()
                         {
-                            GroupId = 1,
                             ListNumber = 1,
                             Name = "Edwin Perez",
                             StudentId = 1
                         }
-                    },
-                    TeamsList = default
+                    }
                 },
                 new Group
                 {
@@ -41,13 +39,11 @@ namespace ClassRoomManager.Repositories
                     {
                         new Student()
                         {
-                            GroupId = 2,
                             ListNumber = 1,
                             Name = "Alicia Paredes",
                             StudentId = 1
                         }
-                    },
-                    TeamsList = default
+                    }
                 }
             };
 
@@ -55,14 +51,12 @@ namespace ClassRoomManager.Repositories
             {
                 new Student()
                 {
-                    GroupId = 1,
                     ListNumber = 1,
                     Name = "Edwin Perez",
                     StudentId = 1
                 },
                 new Student()
                 {
-                    GroupId = 2,
                     ListNumber = 1,
                     Name = "Alicia Paredes",
                     StudentId = 1
@@ -73,15 +67,13 @@ namespace ClassRoomManager.Repositories
             {
                 new Note()
                 {
-                    StudentId = Students.ElementAt(0).StudentId,
-                    GroupId = Groups.ElementAt(0).GroupId,
+                    Student = Students.ElementAt(0),
                     CreationDate = DateTimeOffset.Now,
                     NoteId = 0
                 },
                 new Note()
                 {
-                    StudentId = Students.ElementAt(1).StudentId,
-                    GroupId = Groups.ElementAt(1).GroupId,
+                    Student = Students.ElementAt(1),
                     CreationDate = DateTimeOffset.Now,
                     NoteId = 1
                 }
@@ -157,7 +149,7 @@ namespace ClassRoomManager.Repositories
 
         public IEnumerable<Note> GetNotesByGroupId(int groupId)
         {
-            return Notes.Where(n => n.GroupId == groupId);
+            return Notes.Where(n => n.Student.Group.GroupId == groupId);
         }
 
         public Student GetStudentById(int studentId)
@@ -167,12 +159,12 @@ namespace ClassRoomManager.Repositories
 
         public IEnumerable<Student> GetStudentsByGroupId(int groupId)
         {
-            return Students.Where(s => s.GroupId == groupId);
+            return Students.Where(s => s.Group.GroupId == groupId);
         }
 
         public IEnumerable<Team> GetTeamsByGroupId(int groupId)
         {
-            return Teams.Where(t => t.GroupId == groupId);
+            throw new NotImplementedException();
         }
 
         

@@ -32,13 +32,13 @@
                 @Html.DisplayFor(modelItem => item.CreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
+                @Html.DisplayFor(modelItem => item.ModificationDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StudentId)
+                @Html.DisplayFor(modelItem => item.Student.StudentId)
             </td>
             <td>
                 <a asp-route="EditNoteForm" asp-route-noteId="@item.NoteId">Edit</a>

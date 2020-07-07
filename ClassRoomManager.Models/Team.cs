@@ -10,15 +10,7 @@ namespace ClassRoomManager.Models
         [Display(Name="Nombre")]
         public string Name { get; set; }
         public string Color { get; set; }
-        public IEnumerable<int> StudentIdList { get; set; }
-        public IEnumerable<Student> Students { get; set; }
+        public IEnumerable<Student> StudentList { get; set; }
         public int TeamId { get; set; }
-        public int GroupId { get; set; }
-
-        public Team()
-        {
-            Students = new List<Student>();
-            StudentIdList = new List<int>();
-        }
     }
 }

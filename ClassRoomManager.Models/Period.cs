@@ -6,6 +6,7 @@ namespace ClassRoomManager.Models
 {
     public class Period
     {
+        public int PeriodId { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
     }

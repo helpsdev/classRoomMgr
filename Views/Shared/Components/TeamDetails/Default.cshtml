@@ -7,12 +7,12 @@
     @Html.DisplayNameFor(model => model.Color)
     @Html.DisplayFor(model => model.Color)
 
-    @Html.DisplayNameFor(model => model.GroupId)
-    @Html.DisplayFor(model => model.GroupId)
+    @*@Html.DisplayNameFor(model => model.GroupId)
+    @Html.DisplayFor(model => model.GroupId)*@
     <ul>
-        @foreach (var studentId in Model.StudentIdList)
+        @foreach (var student in Model.StudentList)
         {
-            <li>@studentId</li>
+            <li>@student.Name</li>
         }
     </ul>
     <label for="team-assistance">Asistencia</label>

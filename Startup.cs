@@ -6,6 +6,8 @@ using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -13,12 +15,20 @@ namespace ClassRoomManager
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public IConfiguration Configuration { get; set; }
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
             services.AddSingleton<IClassRoomManagerData, InMemoryClassRoomManagerData>();
+            services.AddDbContext<ClassRoomManagerContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("ClassRoomManagerContextDb"))
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

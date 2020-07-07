@@ -6,6 +6,7 @@ namespace ClassRoomManager.Models
 {
     public class StudentClassDay
     {
+        public int StudentClassDayId { get; set; }
         public Student Student { get; set; }
         public DateTimeOffset Date { get; set; }
         public bool Assistance { get; set; }

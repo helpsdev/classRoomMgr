@@ -6,20 +6,20 @@
 <hr />
 <form asp-action="EditNote" method="post">
     <div class="form-group">
-        <label asp-for="GroupId" class="control-label"></label>
-        <input asp-for="GroupId" class="form-control" />
+        <label asp-for="Student.Group.GroupId" class="control-label"></label>
+        <input asp-for="Student.Group.GroupId" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="CreationDate" class="control-label"></label>
         <input asp-for="CreationDate" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="ModifiedDate" class="control-label"></label>
-        <input asp-for="ModifiedDate" class="form-control" />
+        <label asp-for="ModificationDate" class="control-label"></label>
+        <input asp-for="ModificationDate" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="StudentId" class="control-label"></label>
-        <input asp-for="StudentId" class="form-control" />
+        <label asp-for="Student.StudentId" class="control-label"></label>
+        <input asp-for="Student.StudentId" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Description" class="control-label"></label>

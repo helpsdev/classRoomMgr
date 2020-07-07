@@ -13,8 +13,8 @@
     @foreach (var item in Model)
     {
         <div>
-            <p>@item.ModifiedDate</p>
-            <p>@item.GroupId - @item.StudentId</p>
+            <p>@item.ModificationDate</p>
+            <p>@item.Student.Group.Name - @item.Student.Name</p>
             <p>@item.Description</p>
         </div>
     }
