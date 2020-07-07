@@ -10,16 +10,16 @@ namespace ClassRoomManager.Controllers
 {
     public class HomeController : Controller
     {
-        public IClassRoomManagerData ClassRoomManagerData { get; }
-        public HomeController(IClassRoomManagerData classRoomManagerData)
+        public IGroupData GroupData { get; }
+        public HomeController(IGroupData groupData)
         {
-            ClassRoomManagerData = classRoomManagerData;
+            GroupData = groupData;
         }
 
         [Route("/", Name = "Home")]
         public IActionResult Home()
         {
-            return View(ClassRoomManagerData.GetAllGroups());
+            return View(GroupData.GetAllGroups());
         }
     }
 }

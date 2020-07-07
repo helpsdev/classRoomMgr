@@ -26,6 +26,7 @@ namespace ClassRoomManager
         {
             services.AddControllersWithViews();
             services.AddSingleton<IClassRoomManagerData, InMemoryClassRoomManagerData>();
+            services.AddScoped<IGroupData, SqlGroupData>();
             services.AddDbContext<ClassRoomManagerContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ClassRoomManagerContextDb"))
             );
