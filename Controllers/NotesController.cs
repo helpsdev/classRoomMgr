@@ -11,16 +11,19 @@ namespace ClassRoomManager.Controllers
     [Route("notes")]
     public class NotesController : Controller
     {
-        public IClassRoomManagerData ClassRoomManagerData { get; }
-        public NotesController(IClassRoomManagerData classRoomManagerData)
+        public INoteData NoteData { get; }
+        public IStudentData StudentData { get; }
+
+        public NotesController(INoteData noteData, IStudentData studentData)
         {
-            ClassRoomManagerData = classRoomManagerData;
+            NoteData = noteData;
+            StudentData = studentData;
         }
 
         [Route("edit/{noteId:int}", Name = "EditNoteForm")]
         public IActionResult EditNote(int noteId)
         {
-            return View(ClassRoomManagerData.GetNoteById(noteId));
+            return View(NoteData.GetNoteById(noteId));
         }
 
         [Route("edit/{noteId:int}", Name = "EditNote")]
@@ -31,7 +34,7 @@ namespace ClassRoomManager.Controllers
             {
                 try
                 {
-                    ClassRoomManagerData.UpdateNote(note);
+                    NoteData.UpdateNote(note);
                 }
                 catch (Exception ex)
                 {
@@ -47,8 +50,8 @@ namespace ClassRoomManager.Controllers
         public IActionResult Notes(int groupId)
         {
             IEnumerable<Note> notes = groupId == 0
-                ? ClassRoomManagerData.GetAllNotes()
-                : ClassRoomManagerData.GetNotesByGroupId(groupId);
+                ? NoteData.GetAllNotes()
+                : NoteData.GetNotesByGroupId(groupId);
 
             var notesViewModel = new NotesViewModel()
             {
@@ -62,7 +65,7 @@ namespace ClassRoomManager.Controllers
         public IActionResult Create(int groupId)
         {
             var t = new CreateNoteViewModel(
-                ClassRoomManagerData.GetStudentsByGroupId(groupId),
+                StudentData.GetStudentsByGroupId(groupId),
                 groupId
             );
             return View(t);
@@ -75,7 +78,7 @@ namespace ClassRoomManager.Controllers
             {
                 try
                 {
-                    ClassRoomManagerData.AddNote(note);
+                    NoteData.AddNote(note);
                 }
                 catch (Exception ex)
                 {
