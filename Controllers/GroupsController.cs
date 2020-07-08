@@ -11,10 +11,15 @@ namespace ClassRoomManager.Controllers
     [Route("groups")]
     public class GroupsController : Controller
     {
-        public IClassRoomManagerData ClassRoomManagerData { get; }
-        public GroupsController(IClassRoomManagerData classRoomManagerData)
+        public IGroupData GroupData { get; }
+        public IStudentData StudentData { get; }
+        public ITeamData TeamData { get; }
+
+        public GroupsController(IGroupData groupData, IStudentData studentData, ITeamData teamData)
         {
-            ClassRoomManagerData = classRoomManagerData;
+            GroupData = groupData;
+            StudentData = studentData;
+            TeamData = teamData;
         }
 
         [Route("list/{groupId:int}", Name = "GroupList")]
@@ -22,8 +27,8 @@ namespace ClassRoomManager.Controllers
         {
             return View(new ListViewModel
             {
-                Students = ClassRoomManagerData.GetStudentsByGroupId(groupId),
-                Teams = ClassRoomManagerData.GetTeamsByGroupId(groupId),
+                Students = StudentData.GetStudentsByGroupId(groupId),
+                Teams = TeamData.GetTeamsByGroupId(groupId),
                 GroupId = groupId
             });
         }
@@ -35,7 +40,7 @@ namespace ClassRoomManager.Controllers
             {
                 try
                 {
-                    ClassRoomManagerData.AddTeam(team);
+                    TeamData.AddTeam(team);
                 }
                 catch (Exception ex)
                 {
