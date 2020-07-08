@@ -64,11 +64,11 @@ namespace ClassRoomManager.Controllers
         [Route("create/{groupId:int}", Name = "CreateNoteForm")]
         public IActionResult Create(int groupId)
         {
-            var t = new CreateNoteViewModel(
+            var createNoteViewModel = new CreateNoteViewModel(
                 StudentData.GetStudentsByGroupId(groupId),
                 groupId
             );
-            return View(t);
+            return View(createNoteViewModel);
         }
         [HttpPost]
         [Route("create/{groupId:int}", Name = "CreateNote")]

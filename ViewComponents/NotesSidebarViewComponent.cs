@@ -9,15 +9,15 @@ namespace ClassRoomManager.ViewComponents
 {
     public class NotesSidebarViewComponent : ViewComponent
     {
-        public IClassRoomManagerData ClassRoomManagerData { get; }
-        public NotesSidebarViewComponent(IClassRoomManagerData classRoomManagerData)
+        public INoteData NoteData { get; }
+        public NotesSidebarViewComponent(INoteData noteData)
         {
-            ClassRoomManagerData = classRoomManagerData;
+            NoteData = noteData;
         }
 
         public IViewComponentResult Invoke(int groupId)
         {
-            return View(ClassRoomManagerData.GetNotesByGroupId(groupId));
+            return View(NoteData.GetNotesByGroupId(groupId));
         }
     }
 }

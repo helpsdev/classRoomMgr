@@ -10,15 +10,15 @@ namespace ClassRoomManager.ViewComponents
 {
     public class TeamDetailsViewComponent : ViewComponent
     {
-        public IClassRoomManagerData ClassRoomManagerData { get; }
-        public TeamDetailsViewComponent(IClassRoomManagerData classRoomManagerData)
+        public ITeamData TeamData { get; }
+        public TeamDetailsViewComponent(ITeamData teamData)
         {
-            ClassRoomManagerData = classRoomManagerData;
+            TeamData = teamData;
         }
 
         public IViewComponentResult Invoke(int teamId)
         {
-            var team = ClassRoomManagerData.GetTeamById(teamId);
+            var team = TeamData.GetTeamById(teamId);
             return View(team);
         }
     }
