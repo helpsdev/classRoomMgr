@@ -12,6 +12,7 @@ namespace ClassRoomManager.Models
         public int StudentId { get; set; }
         [Display(Name = "No. Lista")]
         public int ListNumber { get; set; }
+        public int GroupId { get; set; }
         public Group Group { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 <h4>Note</h4>
 <hr />
 <form asp-route="CreateNote" asp-route-groupId="@Model.GroupId" method="post">
-    <select name="StudentId">
+    <select name="studentId">
         @foreach (var student in Model.Students)
         {
             <option value="@student.StudentId">@student.Name</option>

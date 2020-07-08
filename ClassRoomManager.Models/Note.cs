@@ -9,6 +9,7 @@ namespace ClassRoomManager.Models
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset ModificationDate { get; set; }
         public Student Student { get; set; }
+        public int StudentId { get; set; }
         public string Description { get; set; }
         public int NoteId { get; set; }
     }
