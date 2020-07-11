@@ -15,6 +15,8 @@ namespace ClassRoomManager.Repositories
         }
         public int AddNote(Note note)
         {
+            note.CreationDate =
+            note.ModificationDate = DateTimeOffset.Now;
             ClassRoomManagerDbContext.Notes.Add(note);
             return ClassRoomManagerDbContext.SaveChanges();
         }
