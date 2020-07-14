@@ -1,4 +1,5 @@
 ﻿using ClassRoomManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,9 @@ namespace ClassRoomManager.Repositories
         public IEnumerable<Team> GetTeamsByGroupId(int groupId)
         {
             return ClassRoomManagerDbContext.Teams
-                .Where(t => t.StudentList.All(s => s.Group.GroupId == groupId))
+                .Include(t => t.StudentList)
+                    .ThenInclude(s => s.Group)
+                .Where(t => t.StudentList.All(s => s.GroupId == groupId))
                 .ToList();
         }
     }

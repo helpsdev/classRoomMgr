@@ -39,7 +39,10 @@ namespace ClassRoomManager.Repositories
         public IEnumerable<Note> GetNotesByGroupId(int groupId)
         {
             return ClassRoomManagerDbContext.Notes
-                .Where(n => n.Student.Group.GroupId == groupId).ToList();
+                .Include(n => n.Student)
+                    .ThenInclude(s => s.Group)
+                .Where(n => n.Student.Group.GroupId == groupId)
+                .ToList();
         }
 
         public void UpdateNote(Note note)
