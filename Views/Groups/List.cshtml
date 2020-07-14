@@ -35,7 +35,7 @@
     <input id="Name" name="Name" type="text" />
     <label>Color:</label>
     <input id="Color" name="Color" type="color" />
-    <select name="StudentIdList" multiple>
+    <select name="StudentIds" multiple>
         @foreach (var student in Model.Students)
         {
             <option value="@student.StudentId">@student.Name</option>
