@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ClassRoomManager.Models
@@ -9,6 +10,7 @@ namespace ClassRoomManager.Models
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset ModificationDate { get; set; }
         public Student Student { get; set; }
+        [Required]
         public int StudentId { get; set; }
         public string Description { get; set; }
         public int NoteId { get; set; }

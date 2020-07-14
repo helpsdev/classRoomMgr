@@ -4,14 +4,16 @@ using ClassRoomManager.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClassRoomManager.Repositories.Migrations
 {
     [DbContext(typeof(ClassRoomManagerContext))]
-    partial class ClassRoomManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20200714012639_MakeStudentIdRequired")]
+    partial class MakeStudentIdRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
