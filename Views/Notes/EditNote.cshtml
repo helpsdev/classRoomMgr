@@ -30,10 +30,10 @@
         <input asp-for="NoteId"/>
     </div>
     <div>
-        <button type="submit" class="btn btn-primary" >Guardar</button>
+        <button type="submit">Guardar</button>
     </div>
 </form>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-route="Notes" asp-route-groupId="@Model.Student.GroupId">Lista de notas</a>
 </div>
 

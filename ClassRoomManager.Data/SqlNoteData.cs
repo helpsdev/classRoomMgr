@@ -1,4 +1,5 @@
 ﻿using ClassRoomManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace ClassRoomManager.Repositories
         {
             return ClassRoomManagerDbContext.Notes
                 .Where(n => n.NoteId == noteId)
+                .Include(n => n.Student)
                 .FirstOrDefault();
         }
 
@@ -44,6 +46,7 @@ namespace ClassRoomManager.Repositories
         {
             ClassRoomManagerDbContext.Notes
                 .Update(note);
+            ClassRoomManagerDbContext.SaveChanges();
         }
     }
 }
