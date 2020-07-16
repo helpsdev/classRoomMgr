@@ -12,8 +12,9 @@ namespace ClassRoomManager.Models
         public string Name { get; set; }
         public string Color { get; set; }
         [NotMapped]
+        [Required]
         public IEnumerable<int> StudentIds { get; set; }
-        public IEnumerable<Student> StudentList { get; set; }
+        public ICollection<Student> StudentList { get; set; } = new List<Student>();
         public int TeamId { get; set; }
     }
 }

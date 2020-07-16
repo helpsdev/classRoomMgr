@@ -17,6 +17,10 @@ namespace ClassRoomManager.Repositories
 
         public int AddTeam(Team team)
         {
+            /*Look up students in team's studentIds list and add them into the team's studentList*/
+            ClassRoomManagerDbContext.Students
+                .Where(s => team.StudentIds.Contains(s.StudentId))
+                .ForEachAsync(s => team.StudentList.Add(s));
             ClassRoomManagerDbContext.Teams.Add(team);
             return ClassRoomManagerDbContext.SaveChanges();
         }

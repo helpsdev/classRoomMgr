@@ -8,7 +8,7 @@ namespace ClassRoomManager.Models
     {
         public string Name { get; set; }
         public int GroupId { get; set; }
-        public IEnumerable<Student> StudentsList { get; set; }
+        public ICollection<Student> StudentsList { get; set; }
         
     }
 }
