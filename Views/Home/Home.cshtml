@@ -21,15 +21,16 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GroupId)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.GroupId)</td>
             <td>
                 <a asp-route="Notes" asp-route-groupid="@item.GroupId">Notas</a>
-                <a asp-route="GroupList" asp-route-groupid="@item.GroupId">Grupo(Lista)</a>
+            </td>
+            <td>
+                <a asp-route="GroupList" asp-route-groupid="@item.GroupId">Lista de Alumnos</a>
+            </td>
+            <td>
+                <a asp-route="TeamsList" asp-route-groupid="@item.GroupId">Lista de Equipos</a>
             </td>
         </tr>
 }

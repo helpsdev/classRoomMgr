@@ -1,0 +1,30 @@
+﻿@model TeamListViewModel
+
+<form>
+    <input type="datetime-local" value="@DateTimeOffset.Now.ToString("yyyy-MM-ddThh:mm")" />
+</form>
+<div style="display:flex;flex-wrap:wrap;">
+    @foreach (var team in Model.Teams)
+    {
+        <div>
+            @foreach (var student in team.StudentList)
+            {
+                <p>@student.Name</p>
+            }
+        </div>
+    }
+</div>
+<button type="button">Agregar Actividad</button>
+<table data-activities-assigned="@Model.ActivitiesAssignedToJson()">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Asistencia</th>
+            @* Dynamic group assignments *@
+        </tr>
+    </thead>
+    <tbody>
+        @* Dynamic student list depending on team selected *@
+    </tbody>
+</table>
+<vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>
