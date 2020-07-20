@@ -14,7 +14,8 @@ namespace ClassRoomManager.Models
 
         public string ActivitiesAssignedToJson()
         {
-            return JsonConvert.SerializeObject(ActivitiesAssigned);
+            return ActivitiesAssigned == null ? string.Empty 
+                : JsonConvert.SerializeObject(ActivitiesAssigned);
         }
     }
 }

@@ -6,7 +6,7 @@
 <div style="display:flex;flex-wrap:wrap;">
     @foreach (var team in Model.Teams)
     {
-        <div>
+        <div data-team-id="@team.TeamId">
             @foreach (var student in team.StudentList)
             {
                 <p>@student.Name</p>
