@@ -15,6 +15,17 @@
     }
 </div>
 <button type="button">Agregar Actividad</button>
+<div>
+    <select>
+        <optgroup label="Tipo de Actividad">
+            @foreach (var activity in Model.Activities)
+            {
+                <option value="@activity.ActivityId">@activity.Name</option>
+            }
+        </optgroup>
+    </select>
+</div>
+
 <table data-activities-assigned="@Model.ActivitiesAssignedToJson()">
     <thead>
         <tr>

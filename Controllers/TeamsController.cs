@@ -12,9 +12,12 @@ namespace ClassRoomManager.Controllers
     public class TeamsController : Controller
     {
         public ITeamData TeamData { get; }
-        public TeamsController(ITeamData teamData)
+        public IActivityData ActivityData { get; }
+
+        public TeamsController(ITeamData teamData, IActivityData activityData)
         {
             TeamData = teamData;
+            ActivityData = activityData;
         }
 
         [Route("list/{groupId:int}", Name = "TeamsList")]
@@ -23,7 +26,8 @@ namespace ClassRoomManager.Controllers
             
             return View(new TeamListViewModel 
             {
-                Teams = TeamData.GetTeamsByGroupId(groupId)
+                Teams = TeamData.GetTeamsByGroupId(groupId),
+                Activities = ActivityData.GetAllActivities()
             });
         }
     }

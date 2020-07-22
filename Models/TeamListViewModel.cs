@@ -11,6 +11,7 @@ namespace ClassRoomManager.Models
         public IEnumerable<Team> Teams { get; set; }
         public int GroupId { get; set; }
         public IEnumerable<ActivityAssignment> ActivitiesAssigned { get; set; }
+        public IEnumerable<Activity> Activities { get; set; }
 
         public string ActivitiesAssignedToJson()
         {
