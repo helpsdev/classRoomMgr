@@ -30,6 +30,7 @@ namespace ClassRoomManager
             services.AddScoped<INoteData, SqlNoteData>();
             services.AddScoped<IStudentData, SqlStudentData>();
             services.AddScoped<ITeamData, SqlTeamData>();
+            services.AddScoped<IActivityData, SqlActivityData>();
             services.AddDbContext<ClassRoomManagerContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ClassRoomManagerContextDb"))
             );

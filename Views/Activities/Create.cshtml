@@ -1,0 +1,32 @@
+﻿@model ClassRoomManager.Models.Activity
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Activity</h4>
+<hr />
+
+<div>
+    <form asp-action="Create">
+        <label asp-for="Name"></label>
+        <input asp-for="Name"/>
+            
+        <label asp-for="FinalEvaluationValue"></label>
+        <input asp-for="FinalEvaluationValue" type="number" step="0.1"/>
+            
+        <label asp-for="Type"></label>
+        <select asp-for="Type" asp-items="Html.GetEnumSelectList<ActivityType>()">
+            <optgroup label="Tipo de Actividad"></optgroup>
+        </select>
+
+        <button type="submit">Crear</button>
+    </form>
+</div>
+
+
+<a asp-action="Index">Back to List</a>
+
+

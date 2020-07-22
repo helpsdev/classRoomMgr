@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClassRoomManager.Models
 {
@@ -6,7 +7,8 @@ namespace ClassRoomManager.Models
     {
         public int ActivityId { get; set; }
         public string Name { get; set; }
-        public double FinalEvaluationValue { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal FinalEvaluationValue { get; set; }
         public ActivityType Type { get; set; }
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset ModificationDate { get; set; }
