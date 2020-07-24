@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
@@ -13,11 +14,13 @@ namespace ClassRoomManager.Controllers
     {
         public ITeamData TeamData { get; }
         public IActivityData ActivityData { get; }
+        public IGroupData GroupData { get; }
 
-        public TeamsController(ITeamData teamData, IActivityData activityData)
+        public TeamsController(ITeamData teamData, IActivityData activityData, IGroupData groupData)
         {
             TeamData = teamData;
             ActivityData = activityData;
+            GroupData = groupData;
         }
 
         [Route("list/{groupId:int}", Name = "TeamsList")]
@@ -25,6 +28,31 @@ namespace ClassRoomManager.Controllers
         {
             
             return View(new TeamListViewModel 
+            {
+                Teams = TeamData.GetTeamsByGroupId(groupId),
+                Activities = ActivityData.GetAllActivities()
+            });
+        }
+
+        [Route("list/{groupId:int}", Name = "TeamListPost")]
+        [HttpPost]
+        public IActionResult List(int groupId, int activityId)
+        {
+
+            if (activityId > 0 && groupId > 0)
+            {
+                try
+                {
+                    GroupData.AddActivity(groupId, activityId);
+                }
+                catch (Exception ex)
+                {
+                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                }
+                
+            }
+
+            return View(new TeamListViewModel
             {
                 Teams = TeamData.GetTeamsByGroupId(groupId),
                 Activities = ActivityData.GetAllActivities()

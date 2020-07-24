@@ -14,9 +14,8 @@
         </div>
     }
 </div>
-<button type="button">Agregar Actividad</button>
-<div>
-    <select>
+<form asp-route="TeamListPost">
+    <select name="activityId">
         <optgroup label="Tipo de Actividad">
             @foreach (var activity in Model.Activities)
             {
@@ -24,7 +23,9 @@
             }
         </optgroup>
     </select>
-</div>
+    <button type="submit">Agregar Actividad</button>
+    <button type="reset">Cancelar</button>
+</form>
 
 <table data-activities-assigned="@Model.ActivitiesAssignedToJson()">
     <thead>

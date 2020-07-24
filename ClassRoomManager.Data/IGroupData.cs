@@ -9,5 +9,6 @@ namespace ClassRoomManager.Repositories
     {
         IEnumerable<Group> GetAllGroups();
         Group GetGroupById(int groupId);
+        int AddActivity(int groupId, int activityId);
     }
 }
