@@ -10,6 +10,7 @@ namespace ClassRoomManager.Repositories
         IEnumerable<Activity> GetAllActivities();
         int AddActivity(Activity activity);
         void UpdateActivity(Activity activity);
-
+        IEnumerable<ActivityAssignment> GetActivitiesAssignedByGroupId(int groupId);
+        DateTimeOffset GetDateTimeOffset();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClassRoomManager.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace ClassRoomManager.Repositories
         public int AddActivity(Activity activity)
         {
             activity.CreationDate =
-                activity.ModificationDate = DateTimeOffset.Now;
+                activity.ModificationDate = GetDateTimeOffset();
             ClassRoomManagerContext.Activities.Add(activity);
             return ClassRoomManagerContext.SaveChanges();
         }
@@ -29,8 +30,17 @@ namespace ClassRoomManager.Repositories
 
         public void UpdateActivity(Activity activity)
         {
-            activity.ModificationDate = DateTimeOffset.Now;
+            activity.ModificationDate = GetDateTimeOffset();
             ClassRoomManagerContext.Activities.Update(activity);
         }
+
+        public IEnumerable<ActivityAssignment> GetActivitiesAssignedByGroupId(int groupId)
+        {
+            return ClassRoomManagerContext.ActivityAssignments
+                .Include(a => a.Student)
+                .Where(a => a.Student.GroupId == groupId);
+        }
+
+        public DateTimeOffset GetDateTimeOffset() => DateTimeOffset.Now;
     }
 }

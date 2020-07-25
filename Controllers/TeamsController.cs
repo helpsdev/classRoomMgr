@@ -30,7 +30,8 @@ namespace ClassRoomManager.Controllers
             return View(new TeamListViewModel 
             {
                 Teams = TeamData.GetTeamsByGroupId(groupId),
-                Activities = ActivityData.GetAllActivities()
+                Activities = ActivityData.GetAllActivities(),
+                ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId)
             });
         }
 

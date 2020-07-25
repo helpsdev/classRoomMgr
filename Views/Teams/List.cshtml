@@ -27,16 +27,47 @@
     <button type="reset">Cancelar</button>
 </form>
 
-<table data-activities-assigned="@Model.ActivitiesAssignedToJson()">
+<table>
     <thead>
         <tr>
             <th>Nombre</th>
             <th>Asistencia</th>
-            @* Dynamic group assignments *@
+            @foreach (var activityAssiged in Model.ActivitiesAssigned)
+            {
+                <th>@Html.DisplayNameFor(a => activityAssiged.Activity.Name)</th>
+            }
         </tr>
     </thead>
-    <tbody>
-        @* Dynamic student list depending on team selected *@
-    </tbody>
+    @foreach (var student in Model.Teams
+                                    .OrderBy(t => t.TeamId)
+                                    .SelectMany(t => t.StudentList))
+    {
+        <tbody data-student-team-id="@student.TeamId">
+            <tr>
+                <td>@student.Name</td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="student-@student.StudentId-assistence">Asistencia</label>
+                    <input id="student-@student.StudentId-assistence" type="checkbox" @(student.StudentClassDayList.FirstOrDefault()?.Assistance == true ? "checked" : "") />
+                </td>
+            </tr>
+            @foreach (var activityAssigned in Model.ActivitiesAssigned.Where(aa => aa.StudentId == student.StudentId))
+            {
+                <tr>
+                    <td>
+                        @if (activityAssigned.Activity.Type == ActivityType.Grade)
+                        {
+                            <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" />
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="@activityAssigned.Completed" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
 </table>
 <vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>

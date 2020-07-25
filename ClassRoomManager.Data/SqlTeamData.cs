@@ -36,8 +36,9 @@ namespace ClassRoomManager.Repositories
         {
             return ClassRoomManagerDbContext.Teams
                 .Include(t => t.StudentList)
-                    .ThenInclude(s => s.Group)
-                .Where(t => t.StudentList.All(s => s.GroupId == groupId))
+                    .ThenInclude(s => s.StudentClassDayList)
+                    .ThenInclude(s => s.Student.Group)
+                .Where(t => t.StudentList.All(s => s.GroupId == groupId && s.StudentClassDayList.All(scd => scd.DateTime.Date == DateTimeOffset.Now.Date)))
                 .ToList();
         }
     }
