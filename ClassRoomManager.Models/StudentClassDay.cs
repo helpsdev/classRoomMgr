@@ -9,7 +9,7 @@ namespace ClassRoomManager.Models
         public int StudentClassDayId { get; set; }
         public int StudentId { get; set; }
         public Student Student { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset DateTime { get; set; }
         public bool Assistance { get; set; }
         public int Grade { get; set; }
     }
