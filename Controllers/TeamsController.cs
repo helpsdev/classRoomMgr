@@ -26,13 +26,13 @@ namespace ClassRoomManager.Controllers
         [Route("list/{groupId:int}", Name = "TeamsList")]
         public IActionResult List(int groupId)
         {
-            
-            return View(new TeamListViewModel 
+            var teamListVewModel = new TeamListViewModel
             {
                 Teams = TeamData.GetTeamsByGroupId(groupId),
                 Activities = ActivityData.GetAllActivities(),
                 ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId)
-            });
+            };
+            return View(teamListVewModel);
         }
 
         [Route("list/{groupId:int}", Name = "TeamListPost")]
@@ -53,11 +53,29 @@ namespace ClassRoomManager.Controllers
                 
             }
 
-            return View(new TeamListViewModel
+            return RedirectToRoute("TeamsList", new { groupId});
+        }
+
+        [Route("details/{groupId:int}", Name = "TeamDetailsPost")]
+        [HttpPost]
+        public IActionResult Details(int groupId, TeamListViewModel updatedTeamListViewModel)
+        {
+
+            if (ModelState.IsValid)
             {
-                Teams = TeamData.GetTeamsByGroupId(groupId),
-                Activities = ActivityData.GetAllActivities()
-            });
+
+                try
+                {
+                    
+                }
+                catch (Exception ex)
+                {
+                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                }
+
+            }
+
+            return RedirectToRoute("TeamsList", new { groupId});
         }
     }
 }

@@ -27,47 +27,49 @@
     <button type="reset">Cancelar</button>
 </form>
 
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Asistencia</th>
-            @foreach (var activityAssiged in Model.ActivitiesAssigned)
-            {
-                <th>@Html.DisplayNameFor(a => activityAssiged.Activity.Name)</th>
-            }
-        </tr>
-    </thead>
-    @foreach (var student in Model.Teams
-                                    .OrderBy(t => t.TeamId)
-                                    .SelectMany(t => t.StudentList))
-    {
-        <tbody data-student-team-id="@student.TeamId">
+<form asp-route="TeamDetailsPost">
+    <table>
+        <thead>
             <tr>
-                <td>@student.Name</td>
+                <th>Nombre</th>
+                <th>Asistencia</th>
+                @foreach (var activityAssiged in Model.ActivitiesAssigned)
+                {
+                    <th>@Html.DisplayNameFor(a => activityAssiged.Activity.Name)</th>
+                }
             </tr>
-            <tr>
-                <td>
-                    <label for="student-@student.StudentId-assistence">Asistencia</label>
-                    <input id="student-@student.StudentId-assistence" type="checkbox" @(student.StudentClassDayList.FirstOrDefault()?.Assistance == true ? "checked" : "") />
-                </td>
-            </tr>
-            @foreach (var activityAssigned in Model.ActivitiesAssigned.Where(aa => aa.StudentId == student.StudentId))
-            {
+        </thead>
+        @foreach (var student in Model.Teams.SelectMany(t => t.StudentList))
+        {
+            <tbody data-student-team-id="@student.TeamId">
+                <tr>
+                    <td>@student.Name</td>
+                </tr>
                 <tr>
                     <td>
-                        @if (activityAssigned.Activity.Type == ActivityType.Grade)
-                        {
-                            <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" />
-                        }
-                        else
-                        {
-                            <input type="checkbox" value="@activityAssigned.Completed" />
-                        }
+                        <label for="student-@student.StudentId-assistence">Asistencia</label>
+                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(student.StudentClassDayList.FirstOrDefault()?.Assistance == true ? "checked" : "") />
+                        <input type="hidden" value="@student.StudentClassDayList.FirstOrDefault()?.StudentClassDayId" />
                     </td>
                 </tr>
-            }
-        </tbody>
-    }
-</table>
+                @foreach (var activityAssigned in Model.ActivitiesAssigned.Where(aa => aa.StudentId == student.StudentId))
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" value="@activityAssigned.ActivityAssignmentId" name="activityAssignmentId" />
+                            @if (activityAssigned.Activity.Type == ActivityType.Grade)
+                            {
+                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" />
+                            }
+                            else
+                            {
+                                <input type="checkbox" value="@activityAssigned.Completed" />
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        }
+    </table>
+</form>
 <vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>
