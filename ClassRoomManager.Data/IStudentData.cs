@@ -7,7 +7,7 @@ namespace ClassRoomManager.Repositories
 {
     public interface IStudentData
     {
-        IEnumerable<Student> GetStudentsByGroupId(int groupId);
+        ICollection<Student> GetStudentsByGroupId(int groupId);
         Student GetStudentById(int studentId);
     }
 }

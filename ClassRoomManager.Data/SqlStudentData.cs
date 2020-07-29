@@ -21,7 +21,7 @@ namespace ClassRoomManager.Repositories
                 .Where(s => s.StudentId == studentId).FirstOrDefault();
         }
 
-        public IEnumerable<Student> GetStudentsByGroupId(int groupId)
+        public ICollection<Student> GetStudentsByGroupId(int groupId)
         {
             return ClassRoomManagerDbContext.Students
                 .Where(s => s.Group.GroupId == groupId)

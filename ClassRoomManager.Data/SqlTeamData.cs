@@ -34,11 +34,12 @@ namespace ClassRoomManager.Repositories
 
         public IEnumerable<Team> GetTeamsByGroupId(int groupId)
         {
-            return ClassRoomManagerDbContext.Teams
-                .Include(t => t.StudentList)
-                    .ThenInclude(s => s.StudentClassDayList)
-                    .ThenInclude(s => s.Student.Group)
-                .Where(t => t.StudentList.All(s => s.GroupId == groupId && s.StudentClassDayList.All(scd => scd.DateTime.Date == DateTimeOffset.Now.Date)))
+            return ClassRoomManagerDbContext.StudentClassDays
+                .Include(scd => scd.Student)
+                    .ThenInclude(s => s.Team)
+                .Include(scd => scd.ClassDay)
+                .Where(scd => scd.ClassDay.DateTime.Date == DateTimeOffset.Now.Date && scd.Student.GroupId == groupId)
+                .Select(s => s.Student.Team)
                 .ToList();
         }
     }

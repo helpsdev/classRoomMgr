@@ -15,12 +15,14 @@ namespace ClassRoomManager.Controllers
         public ITeamData TeamData { get; }
         public IActivityData ActivityData { get; }
         public IGroupData GroupData { get; }
+        public IStudentData StudentData { get; }
 
-        public TeamsController(ITeamData teamData, IActivityData activityData, IGroupData groupData)
+        public TeamsController(ITeamData teamData, IActivityData activityData, IGroupData groupData, IStudentData studentData)
         {
             TeamData = teamData;
             ActivityData = activityData;
             GroupData = groupData;
+            StudentData = studentData;
         }
 
         [Route("list/{groupId:int}", Name = "TeamsList")]
@@ -30,7 +32,17 @@ namespace ClassRoomManager.Controllers
             {
                 Teams = TeamData.GetTeamsByGroupId(groupId),
                 Activities = ActivityData.GetAllActivities(),
-                ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId)
+                ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId),
+                StudentClassDay = new StudentClassDay
+                {
+                    ClassDay = new ClassDay
+                    {
+                        DateTime = DateTimeOffset.Now,
+                        ClassDayId = 1
+                    },
+                    Student = StudentData.GetStudentsByGroupId(groupId).FirstOrDefault()
+                }
+
             };
             return View(teamListVewModel);
         }
