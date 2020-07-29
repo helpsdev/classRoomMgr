@@ -16,7 +16,6 @@ namespace ClassRoomManager.Models
         public Group Group { get; set; }
         public int? TeamId { get; set; }
         public Team Team { get; set; }
-        public ICollection<StudentClassDay> StudentClassDayList { get; set; }
-        
+
     }
 }
