@@ -9,5 +9,6 @@ namespace ClassRoomManager.Repositories
     {
         ICollection<Student> GetStudentsByGroupId(int groupId);
         Student GetStudentById(int studentId);
+        ICollection<StudentClassDay> GetStudentClassDaysByDate(DateTimeOffset date);
     }
 }

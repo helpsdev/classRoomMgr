@@ -1,4 +1,6 @@
 ﻿using ClassRoomManager.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +27,14 @@ namespace ClassRoomManager.Repositories
         {
             return ClassRoomManagerDbContext.Students
                 .Where(s => s.Group.GroupId == groupId)
+                .ToList();
+        }
+
+        public ICollection<StudentClassDay> GetStudentClassDaysByDate(DateTimeOffset date)
+        {
+            return ClassRoomManagerDbContext.StudentClassDays
+                .Include(scd => scd.ClassDay)
+                .Where(scd => scd.ClassDay.DateTime.Date == date.Date)
                 .ToList();
         }
     }

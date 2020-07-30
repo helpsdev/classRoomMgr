@@ -35,7 +35,7 @@
                 <th>Asistencia</th>
                 @foreach (var activityAssiged in Model.ActivitiesAssigned)
                 {
-                    <th>@Html.DisplayNameFor(a => activityAssiged.Activity.Name)</th>
+                    <th>@activityAssiged.Activity.Name</th>
                 }
             </tr>
         </thead>

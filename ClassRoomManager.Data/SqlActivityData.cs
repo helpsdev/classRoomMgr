@@ -38,7 +38,8 @@ namespace ClassRoomManager.Repositories
         {
             return ClassRoomManagerContext.ActivityAssignments
                 .Include(a => a.Student)
-                .Where(a => a.Student.GroupId == groupId);
+                .Where(a => a.Student.GroupId == groupId)
+                .ToList();
         }
 
         public DateTimeOffset GetDateTimeOffset() => DateTimeOffset.Now;
