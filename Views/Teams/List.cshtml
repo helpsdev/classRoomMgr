@@ -47,9 +47,12 @@
                 </tr>
                 <tr>
                     <td>
+                        @{
+                            var studentClassDayForCurrentStudent = Model.StudentClassDayList.Where(scd => scd.StudentId == student.StudentId).FirstOrDefault();
+                        }
                         <label for="student-@student.StudentId-assistence">Asistencia</label>
-                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(Model.StudentClassDay.Assistance == true ? "checked" : "") />
-                        <input type="hidden" value="@Model.StudentClassDay.StudentClassDayId" />
+                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(studentClassDayForCurrentStudent?.Assistance == true ? "checked" : "") />
+                        <input type="hidden" value="@studentClassDayForCurrentStudent?.StudentClassDayId" />
                     </td>
                 </tr>
                 @foreach (var activityAssigned in Model.ActivitiesAssigned.Where(aa => aa.StudentId == student.StudentId))

@@ -33,14 +33,18 @@ namespace ClassRoomManager.Controllers
                 Teams = TeamData.GetTeamsByGroupId(groupId),
                 Activities = ActivityData.GetAllActivities(),
                 ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId),
-                StudentClassDay = new StudentClassDay
+                StudentClassDayList = new List<StudentClassDay>
                 {
-                    ClassDay = new ClassDay
+                    new StudentClassDay
                     {
-                        DateTime = DateTimeOffset.Now,
-                        ClassDayId = 1
-                    },
-                    Student = StudentData.GetStudentsByGroupId(groupId).FirstOrDefault()
+                        ClassDay = new ClassDay
+                        {
+                            DateTime = DateTimeOffset.Now,
+                            ClassDayId = 1
+                        },
+                        Student = StudentData.GetStudentsByGroupId(groupId).FirstOrDefault(),
+                        StudentId = StudentData.GetStudentsByGroupId(groupId).FirstOrDefault().StudentId
+                    }
                 }
 
             };

@@ -12,7 +12,7 @@ namespace ClassRoomManager.Models
         public int GroupId { get; set; }
         public IEnumerable<ActivityAssignment> ActivitiesAssigned { get; set; }
         public IEnumerable<Activity> Activities { get; set; }
-        public StudentClassDay StudentClassDay { get; set; }
+        public IEnumerable<StudentClassDay> StudentClassDayList { get; set; }
 
     }
 }
