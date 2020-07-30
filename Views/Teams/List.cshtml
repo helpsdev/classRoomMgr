@@ -48,7 +48,7 @@
                 <tr>
                     <td>
                         <label for="student-@student.StudentId-assistence">Asistencia</label>
-                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(Model.StudentClassDay.Assistance ? "checked" : "") />
+                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(Model.StudentClassDay.Assistance == true ? "checked" : "") />
                         <input type="hidden" value="@Model.StudentClassDay.StudentClassDayId" />
                     </td>
                 </tr>

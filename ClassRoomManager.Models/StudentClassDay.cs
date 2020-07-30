@@ -11,7 +11,7 @@ namespace ClassRoomManager.Models
         public Student Student { get; set; }
         public ClassDay ClassDay { get; set; }
         public int ClassDayId { get; set; }
-        public bool Assistance { get; set; }
-        public int Grade { get; set; }
+        public bool? Assistance { get; set; }
+        public int? Grade { get; set; }
     }
 }
