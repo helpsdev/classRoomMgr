@@ -33,9 +33,9 @@
             <tr>
                 <th>Nombre</th>
                 <th>Asistencia</th>
-                @foreach (var activityAssiged in Model.ActivitiesAssigned)
+                @foreach (var activityName in Model.ActivitiesAssigned.Select(aa => aa.Activity.Name).Distinct())
                 {
-                    <th>@activityAssiged.Activity.Name</th>
+                    <th>@activityName</th>
                 }
             </tr>
         </thead>
