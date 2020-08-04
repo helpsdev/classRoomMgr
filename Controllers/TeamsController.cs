@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using ClassRoomManager.InputModels;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,7 @@ namespace ClassRoomManager.Controllers
                 StudentClassDayList = StudentData.GetStudentClassDaysByDate(DateTimeOffset.Now.Date)
 
             };
+            ViewBag.groupId = groupId;
             return View(teamListVewModel);
         }
 
@@ -57,12 +59,12 @@ namespace ClassRoomManager.Controllers
                 
             }
 
-            return RedirectToRoute("TeamsList", new { groupId});
+            return RedirectToRoute("TeamsList", new {groupId});
         }
 
         [Route("details/{groupId:int}", Name = "TeamDetailsPost")]
         [HttpPost]
-        public IActionResult Details(int groupId, TeamListViewModel updatedTeamListViewModel)
+        public IActionResult Details(int groupId, TeamDetailsInputModel[] inputModel)
         {
 
             if (ModelState.IsValid)
@@ -70,7 +72,7 @@ namespace ClassRoomManager.Controllers
 
                 try
                 {
-                    
+                    throw new NotImplementedException();
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +81,7 @@ namespace ClassRoomManager.Controllers
 
             }
 
-            return RedirectToRoute("TeamsList", new { groupId});
+            return RedirectToRoute("TeamsList", new {groupId});
         }
     }
 }

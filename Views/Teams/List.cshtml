@@ -1,5 +1,6 @@
 ﻿@model TeamListViewModel
 
+
 <form>
     <input type="datetime-local" value="@DateTimeOffset.Now.ToString("yyyy-MM-ddThh:mm")" />
 </form>
@@ -26,8 +27,8 @@
     <button type="submit">Agregar Actividad</button>
     <button type="reset">Cancelar</button>
 </form>
-
-<form asp-route="TeamDetailsPost">
+@* Need to specify route parameter manually due to the taghelper can't recognize a route parameter when routeName is different than current view name*@
+<form asp-route="TeamDetailsPost" asp-route-groupId="@ViewBag.groupId" data-team-details> 
     <table>
         <thead>
             <tr>
@@ -41,32 +42,31 @@
         </thead>
         @foreach (var student in Model.Teams.SelectMany(t => t.StudentList))
         {
-            <tbody data-student-team-id="@student.TeamId">
+            <tbody data-student-team-id="@student.TeamId" data-student-id="@student.StudentId">
                 <tr>
                     <td>@student.Name</td>
                 </tr>
                 <tr>
                     <td>
                         @{
-                            var studentClassDayForCurrentStudent = Model.StudentClassDayList.Where(scd => scd.StudentId == student.StudentId).FirstOrDefault();
+                            var studentClassDayForStudent = Model.StudentClassDayList.Where(scd => scd.StudentId == student.StudentId).FirstOrDefault();
                         }
                         <label for="student-@student.StudentId-assistence">Asistencia</label>
-                        <input id="student-@student.StudentId-assistence" name="" type="checkbox" @(studentClassDayForCurrentStudent?.Assistance == true ? "checked" : "") />
-                        <input type="hidden" value="@studentClassDayForCurrentStudent?.StudentClassDayId" />
+                        <input id="student-@student.StudentId-assistence" name="assistance" type="checkbox" @(studentClassDayForStudent?.Assistance == true ? "checked" : "") />
+                        <input type="hidden" value="@studentClassDayForStudent?.StudentClassDayId" name="studentClassDayId" />
                     </td>
                 </tr>
                 @foreach (var activityAssigned in Model.ActivitiesAssigned.Where(aa => aa.StudentId == student.StudentId))
                 {
-                    <tr>
+                    <tr data-activity-assignment-id="@activityAssigned.ActivityAssignmentId">
                         <td>
-                            <input type="hidden" value="@activityAssigned.ActivityAssignmentId" name="activityAssignmentId" />
                             @if (activityAssigned.Activity.Type == ActivityType.Grade)
                             {
-                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" />
+                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" name="type"/>
                             }
                             else
                             {
-                                <input type="checkbox" value="@activityAssigned.Completed" />
+                                <input type="checkbox" value="@activityAssigned.Completed" name="@activityAssigned.Activity.Type"/>
                             }
                         </td>
                     </tr>
@@ -74,5 +74,56 @@
             </tbody>
         }
     </table>
+    <button type="submit">Guardar cambios</button>
 </form>
 <vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>
+
+@section scripts{ 
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+        const teamDetailsForm = document.querySelector("[data-team-details]");
+        teamDetailsForm.addEventListener("submit", ev => {
+            const submittingForm = ev.target;
+            ev.preventDefault();
+            const ajaxCall = new XMLHttpRequest();
+            ajaxCall.addEventListener("load", () => console.log(ajaxCall.responseText));
+            ajaxCall.open("POST", submittingForm.getAttribute("action"));
+            ajaxCall.setRequestHeader("Content-Type", "application/json");
+            ajaxCall.send(getPostData(submittingForm));
+        });
+    });
+
+    const getPostData = (form) => {
+        const tbodiesArray = [...form.querySelectorAll("tbody")];
+        return tbodiesArray.map(tb => {
+
+            const activityAssignmentArray = [...tb.querySelectorAll('[data-activity-assignment-id]')].map(tr => {
+
+                const assignmentTypeInput = tr.querySelector('input[name="type"]');
+                const assignmenType = assignmentTypeInput.type === "number" ? "grade" : "completed";
+                const assignmentValue = assignmentTypeInput.type === "number" ? assignmentTypeInput.value : assignmentTypeInput.checked;
+
+                const activityAssignment = {
+                    activityAssignmentId: tr.getAttribute("data-activity-assignment-id")
+                };
+
+                activityAssignment[assignmenType] = assignmentValue;
+
+                return activityAssignment;
+            });
+            
+
+
+            return {
+                studentId: tb.getAttribute("data-student-id"),
+                studentClassDay: {
+                    studentClassDayId: tb.querySelector('[name="studentClassDayId"]').value,
+                    assistance: tb.querySelector('[name="assistance"]').checked
+                },
+                activityAssignments: activityAssignmentArray
+
+            };
+        });
+    }
+</script>
+}
