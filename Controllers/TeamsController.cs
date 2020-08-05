@@ -64,7 +64,7 @@ namespace ClassRoomManager.Controllers
 
         [Route("details/{groupId:int}", Name = "TeamDetailsPost")]
         [HttpPost]
-        public IActionResult Details(int groupId, TeamDetailsInputModel[] inputModel)
+        public IActionResult Details(int groupId, [FromBody]IEnumerable<TeamDetailsInputModel> inputModel)
         {
 
             if (ModelState.IsValid)

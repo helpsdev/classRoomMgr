@@ -88,8 +88,8 @@
             const ajaxCall = new XMLHttpRequest();
             ajaxCall.addEventListener("load", () => console.log(ajaxCall.responseText));
             ajaxCall.open("POST", submittingForm.getAttribute("action"));
-            ajaxCall.setRequestHeader("Content-Type", "application/json");
-            ajaxCall.send(getPostData(submittingForm));
+            ajaxCall.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            ajaxCall.send(JSON.stringify(getPostData(submittingForm)));
         });
     });
 
