@@ -100,24 +100,23 @@
             const activityAssignmentArray = [...tb.querySelectorAll('[data-activity-assignment-id]')].map(tr => {
 
                 const assignmentTypeInput = tr.querySelector('input[name="type"]');
-                const assignmenType = assignmentTypeInput.type === "number" ? "grade" : "completed";
-                const assignmentValue = assignmentTypeInput.type === "number" ? assignmentTypeInput.value : assignmentTypeInput.checked;
+                const isNumberInput = assignmentTypeInput.type === "number";
+                const assignmenType = isNumberInput ? "grade" : "completed";
+                const assignmentValue = isNumberInput ? Number(assignmentTypeInput.value) : assignmentTypeInput.checked;
 
                 const activityAssignment = {
-                    activityAssignmentId: tr.getAttribute("data-activity-assignment-id")
+                    activityAssignmentId: Number(tr.getAttribute("data-activity-assignment-id"))
                 };
 
                 activityAssignment[assignmenType] = assignmentValue;
 
                 return activityAssignment;
             });
-            
-
 
             return {
-                studentId: tb.getAttribute("data-student-id"),
+                studentId: Number(tb.getAttribute("data-student-id")),
                 studentClassDay: {
-                    studentClassDayId: tb.querySelector('[name="studentClassDayId"]').value,
+                    studentClassDayId: Number(tb.querySelector('[name="studentClassDayId"]').value),
                     assistance: tb.querySelector('[name="assistance"]').checked
                 },
                 activityAssignments: activityAssignmentArray
