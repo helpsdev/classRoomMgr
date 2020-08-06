@@ -64,7 +64,7 @@ namespace ClassRoomManager.Controllers
 
         [Route("details/{groupId:int}", Name = "TeamDetailsPost")]
         [HttpPost]
-        public IActionResult Details(int groupId, [FromBody]IEnumerable<TeamDetailsInputModel> inputModel)
+        public IActionResult Details(int groupId, [FromBody]IEnumerable<TeamDetailsInputModel> teamDetailsInputModels)
         {
 
             if (ModelState.IsValid)
@@ -72,7 +72,10 @@ namespace ClassRoomManager.Controllers
 
                 try
                 {
-                    throw new NotImplementedException();
+                    foreach (var teamDetailsInputModel in teamDetailsInputModels)
+                    {
+                        StudentData.AddOrUpdateStudentClassDay(teamDetailsInputModel.StudentClassDay);
+                    }
                 }
                 catch (Exception ex)
                 {

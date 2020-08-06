@@ -10,5 +10,8 @@ namespace ClassRoomManager.Repositories
         ICollection<Student> GetStudentsByGroupId(int groupId);
         Student GetStudentById(int studentId);
         ICollection<StudentClassDay> GetStudentClassDaysByDate(DateTimeOffset date);
+        int AddStudentClassDay(StudentClassDay studentClassDay);
+        int UpdateStudentClassDay(StudentClassDay studentClassDay);
+        int AddOrUpdateStudentClassDay(StudentClassDay studentClassDay);
     }
 }

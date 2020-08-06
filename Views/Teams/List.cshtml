@@ -97,6 +97,7 @@
         const tbodiesArray = [...form.querySelectorAll("tbody")];
         return tbodiesArray.map(tb => {
 
+            const studentId = Number(tb.getAttribute("data-student-id"));
             const activityAssignmentArray = [...tb.querySelectorAll('[data-activity-assignment-id]')].map(tr => {
 
                 const assignmentTypeInput = tr.querySelector('input[name="type"]');
@@ -106,6 +107,7 @@
 
                 const activityAssignment = {
                     activityAssignmentId: Number(tr.getAttribute("data-activity-assignment-id"))
+                    studentId: studentId
                 };
 
                 activityAssignment[assignmenType] = assignmentValue;
@@ -114,10 +116,10 @@
             });
 
             return {
-                studentId: Number(tb.getAttribute("data-student-id")),
                 studentClassDay: {
                     studentClassDayId: Number(tb.querySelector('[name="studentClassDayId"]').value),
-                    assistance: tb.querySelector('[name="assistance"]').checked
+                    assistance: tb.querySelector('[name="assistance"]').checked,
+                    studentId: studentId
                 },
                 activityAssignments: activityAssignmentArray
 

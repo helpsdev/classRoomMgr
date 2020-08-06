@@ -37,5 +37,19 @@ namespace ClassRoomManager.Repositories
                 .Where(scd => scd.ClassDay.DateTime.Date == date.Date)
                 .ToList();
         }
+
+        public int AddOrUpdateStudentClassDay(StudentClassDay studentClassDay)
+        {
+            if (studentClassDay.StudentClassDayId == 0 || ClassRoomManagerDbContext.StudentClassDays.Find(studentClassDay.StudentClassDayId) == null)
+            {
+                ClassRoomManagerDbContext.StudentClassDays.Add(studentClassDay);
+                return ClassRoomManagerDbContext.SaveChanges();
+            }
+            else
+            {
+                ClassRoomManagerDbContext.StudentClassDays.Update(studentClassDay);
+                return ClassRoomManagerDbContext.SaveChanges();
+            }
+        }
     }
 }

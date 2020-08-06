@@ -28,10 +28,11 @@ namespace ClassRoomManager.Repositories
             return ClassRoomManagerContext.Activities.ToList();
         }
 
-        public void UpdateActivity(Activity activity)
+        public int UpdateActivity(Activity activity)
         {
             activity.ModificationDate = GetDateTimeOffset();
             ClassRoomManagerContext.Activities.Update(activity);
+            return ClassRoomManagerContext.SaveChanges();
         }
 
         public IEnumerable<ActivityAssignment> GetActivitiesAssignedByGroupId(int groupId)
