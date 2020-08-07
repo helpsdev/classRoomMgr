@@ -42,14 +42,60 @@ namespace ClassRoomManager.Repositories
         {
             if (studentClassDay.StudentClassDayId == 0 || ClassRoomManagerDbContext.StudentClassDays.Find(studentClassDay.StudentClassDayId) == null)
             {
-                ClassRoomManagerDbContext.StudentClassDays.Add(studentClassDay);
-                return ClassRoomManagerDbContext.SaveChanges();
+                return AddStudentClassDay(studentClassDay);
             }
             else
             {
-                ClassRoomManagerDbContext.StudentClassDays.Update(studentClassDay);
-                return ClassRoomManagerDbContext.SaveChanges();
+                return UpdateStudentClassDay(studentClassDay);
             }
+        }
+
+        public int AddStudentClassDay(StudentClassDay studentClassDay)
+        {
+            if (studentClassDay == null) throw new ArgumentException("studentClassDay");
+            
+            if (studentClassDay.ClassDay == null)
+            {
+                studentClassDay.ClassDay = GetTodayClassDay();
+            }
+
+            ClassRoomManagerDbContext.StudentClassDays.Add(studentClassDay);
+
+            return ClassRoomManagerDbContext.SaveChanges();
+        }
+
+        public int UpdateStudentClassDay(StudentClassDay studentClassDay)
+        {
+            if (studentClassDay == null) throw new ArgumentException("studentClassDay");
+
+            var dbStudentClassDay = ClassRoomManagerDbContext.StudentClassDays
+                .Include(scd => scd.ClassDay)
+                .FirstOrDefault(scd => scd.StudentClassDayId == studentClassDay.StudentClassDayId);
+
+            if (dbStudentClassDay.ClassDay == null)
+            {
+                dbStudentClassDay.ClassDay = GetTodayClassDay();
+            }
+
+            dbStudentClassDay.Assistance = studentClassDay.Assistance;
+
+            ClassRoomManagerDbContext.StudentClassDays.Update(dbStudentClassDay);
+
+            return ClassRoomManagerDbContext.SaveChanges();
+        }
+
+        public ClassDay GetTodayClassDay()
+        {
+            var todayClassDay = ClassRoomManagerDbContext.ClassDays.FirstOrDefault(cd => cd.DateTime.Date == DateTimeOffset.Now.Date);
+            if (todayClassDay == null)
+            {
+                todayClassDay = new ClassDay
+                {
+                    DateTime = DateTimeOffset.Now.Date
+                };
+                ClassRoomManagerDbContext.ClassDays.Add(todayClassDay);
+            }
+            return todayClassDay;
         }
     }
 }

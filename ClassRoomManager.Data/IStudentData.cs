@@ -13,5 +13,6 @@ namespace ClassRoomManager.Repositories
         int AddStudentClassDay(StudentClassDay studentClassDay);
         int UpdateStudentClassDay(StudentClassDay studentClassDay);
         int AddOrUpdateStudentClassDay(StudentClassDay studentClassDay);
+        ClassDay GetTodayClassDay();
     }
 }
