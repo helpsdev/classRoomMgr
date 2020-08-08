@@ -1,6 +1,7 @@
 ﻿using ClassRoomManager.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace ClassRoomManager.Repositories
@@ -11,6 +12,7 @@ namespace ClassRoomManager.Repositories
         int AddActivity(Activity activity);
         int UpdateActivity(Activity activity);
         IEnumerable<ActivityAssignment> GetActivitiesAssignedByGroupId(int groupId);
+        int UpdateActivityAssignments(IEnumerable<ActivityAssignment> activityAssignments);
         DateTimeOffset GetDateTimeOffset();
     }
 }

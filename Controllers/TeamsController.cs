@@ -75,6 +75,8 @@ namespace ClassRoomManager.Controllers
                     foreach (var teamDetailsInputModel in teamDetailsInputModels)
                     {
                         StudentData.AddOrUpdateStudentClassDay(teamDetailsInputModel.StudentClassDay);
+
+                        ActivityData.UpdateActivityAssignments(teamDetailsInputModel.ActivityAssignments);
                     }
                 }
                 catch (Exception ex)

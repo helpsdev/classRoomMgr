@@ -44,5 +44,11 @@ namespace ClassRoomManager.Repositories
         }
 
         public DateTimeOffset GetDateTimeOffset() => DateTimeOffset.Now;
+
+        public int UpdateActivityAssignments(IEnumerable<ActivityAssignment> activityAssignments)
+        {
+            ClassRoomManagerContext.ActivityAssignments.UpdateRange(activityAssignments);
+            return ClassRoomManagerContext.SaveChanges();
+        }
     }
 }
