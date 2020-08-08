@@ -29,14 +29,20 @@
 </form>
 @* Need to specify route parameter manually due to the taghelper can't recognize a route parameter when routeName is different than current view name*@
 <form asp-route="TeamDetailsPost" asp-route-groupId="@ViewBag.groupId" data-team-details> 
-    <table>
+    <table data-team-details>
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Asistencia</th>
-                @foreach (var activityName in Model.ActivitiesAssigned.Select(aa => aa.Activity.Name).Distinct())
+                @foreach (var activity in Model.ActivitiesAssigned.Select(aa => aa.Activity).Distinct())
                 {
-                    <th>@activityName</th>
+                    <th>
+                        <p>@activity.Name</p>
+                        @if (activity.Type == ActivityType.Grade)
+                        {
+                            <input type="number" min="0" max="10" step=".1" data-activity-global-grade="@activity.ActivityId"/>
+                        }
+                    </th>
                 }
             </tr>
         </thead>
@@ -62,7 +68,7 @@
                         <td>
                             @if (activityAssigned.Activity.Type == ActivityType.Grade)
                             {
-                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" name="type"/>
+                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" name="type" data-activity-grade="@activityAssigned.Activity.ActivityId"/>
                             }
                             else
                             {
@@ -75,6 +81,14 @@
             </tbody>
         }
     </table>
+
+    <div>
+        <p>Nombre</p>
+        <p>Asistance</p>
+        @* dynamic *@
+
+    </div>
+
     <button type="submit">Guardar cambios</button>
 </form>
 <vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>
@@ -92,6 +106,21 @@
             ajaxCall.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             ajaxCall.send(JSON.stringify(getPostData(submittingForm)));
         });
+
+        /*Register global grade assigner*/
+        const teamDetailsTable = document.querySelector("table[data-team-details]");
+        const activityGlobalGradeInputs = teamDetailsTable.querySelectorAll("input[data-activity-global-grade]");
+
+        activityGlobalGradeInputs
+            .forEach(ag => ag.addEventListener("change", e => {
+                const activityId = e.target.getAttribute("data-activity-global-grade");
+
+                teamDetailsTable
+                    .querySelectorAll(`input[data-activity-grade='${activityId}']`)
+                    .forEach(i => i.value = e.target.value);
+            }
+            ));
+        
     });
 
     const getPostData = (form) => {
