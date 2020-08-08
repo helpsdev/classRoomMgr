@@ -64,7 +64,7 @@ namespace ClassRoomManager.Controllers
 
         [Route("details/{groupId:int}", Name = "TeamDetailsPost")]
         [HttpPost]
-        public IActionResult Details(int groupId, [FromBody]IEnumerable<TeamDetailsInputModel> teamDetailsInputModels)
+        public IActionResult Details([FromBody]IEnumerable<TeamDetailsInputModel> teamDetailsInputModels)
         {
 
             if (ModelState.IsValid)
@@ -84,7 +84,7 @@ namespace ClassRoomManager.Controllers
 
             }
 
-            return RedirectToRoute("TeamsList", new {groupId});
+            return new StatusCodeResult((int)HttpStatusCode.OK);
         }
     }
 }
