@@ -48,7 +48,7 @@
         </thead>
         @foreach (var student in Model.Teams.SelectMany(t => t.StudentList))
         {
-            <tbody data-student-team-id="@student.TeamId" data-student-id="@student.StudentId">
+            <tbody style="display:none;" data-student-team-id="@student.TeamId" data-student-id="@student.StudentId">
                 <tr>
                     <td>@student.Name</td>
                 </tr>
@@ -120,6 +120,21 @@
                     .forEach(i => i.value = e.target.value);
             }
             ));
+
+        /*Register show team details per team*/
+        document.querySelectorAll("[data-team-id]")
+            .forEach(team => {
+                team.addEventListener("click", e => {
+                    const selectedTeamId = e.currentTarget.getAttribute("data-team-id");
+                    const selectedTeamTbodies = document.querySelectorAll(`[data-team-details] [data-student-team-id="${selectedTeamId}"]`);
+
+                    selectedTeamTbodies.forEach(tbody => {
+                        tbody.style.display = "block";
+                    });
+                    
+
+                });
+            });
         
     });
 
