@@ -34,10 +34,10 @@ namespace ClassRoomManager.Controllers
                 Teams = TeamData.GetTeamsByGroupId(groupId),
                 Activities = ActivityData.GetAllActivities(),
                 ActivitiesAssigned = ActivityData.GetActivitiesAssignedByGroupId(groupId),
-                StudentClassDayList = StudentData.GetStudentClassDaysByDate(DateTimeOffset.Now.Date)
+                StudentClassDayList = StudentData.GetStudentClassDaysByDate(DateTimeOffset.Now.Date),
+                GroupId = groupId
 
             };
-            ViewBag.groupId = groupId;
             return View(teamListVewModel);
         }
 

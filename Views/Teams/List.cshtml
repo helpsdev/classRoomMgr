@@ -1,6 +1,5 @@
 ﻿@model TeamListViewModel
 
-
 <form>
     <input type="datetime-local" value="@DateTimeOffset.Now.ToString("yyyy-MM-ddThh:mm")" />
 </form>
@@ -28,7 +27,7 @@
     <button type="reset">Cancelar</button>
 </form>
 @* Need to specify route parameter manually due to the taghelper can't recognize a route parameter when routeName is different than current view name*@
-<form asp-route="TeamDetailsPost" asp-route-groupId="@ViewBag.groupId" data-team-details> 
+<form asp-route="TeamDetailsPost" asp-route-groupId="@Model.GroupId" data-team-details> 
     <table data-team-details>
         <thead>
             <tr>
@@ -40,7 +39,7 @@
                         <p>@activity.Name</p>
                         @if (activity.Type == ActivityType.Grade)
                         {
-                            <input type="number" min="0" max="10" step=".1" data-activity-global-grade="@activity.ActivityId"/>
+                            <input type="number" min="0" max="10" data-activity-global-grade="@activity.ActivityId"/>
                         }
                     </th>
                 }
@@ -68,7 +67,7 @@
                         <td>
                             @if (activityAssigned.Activity.Type == ActivityType.Grade)
                             {
-                                <input type="number" min="0" max="10" step="0.1" value="@activityAssigned.Grade" name="type" data-activity-grade="@activityAssigned.Activity.ActivityId"/>
+                                <input type="number" min="0" max="10" value="@activityAssigned.Grade" name="type" data-activity-grade="@activityAssigned.Activity.ActivityId"/>
                             }
                             else
                             {
@@ -82,16 +81,11 @@
         }
     </table>
 
-    <div>
-        <p>Nombre</p>
-        <p>Asistance</p>
-        @* dynamic *@
-
-    </div>
-
     <button type="submit">Guardar cambios</button>
 </form>
 <vc:notes-sidebar group-id="@Model.GroupId" ></vc:notes-sidebar>
+
+<a asp-controller="Home" asp-action="Index">Back to List</a>
 
 @section scripts{ 
 <script type="text/javascript">
@@ -129,7 +123,7 @@
                     const selectedTeamTbodies = document.querySelectorAll(`[data-team-details] [data-student-team-id="${selectedTeamId}"]`);
 
                     selectedTeamTbodies.forEach(tbody => {
-                        tbody.style.display = "block";
+                        tbody.style.display = tbody.style.display === "block" ? "none" : "block";
                     });
                     
 
