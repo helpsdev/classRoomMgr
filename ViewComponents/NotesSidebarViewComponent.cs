@@ -1,4 +1,5 @@
-﻿using ClassRoomManager.Repositories;
+﻿using ClassRoomManager.Models;
+using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,19 @@ namespace ClassRoomManager.ViewComponents
             NoteData = noteData;
         }
 
-        public IViewComponentResult Invoke(int groupId)
+        public IViewComponentResult Invoke(int? groupId, int? studentId)
         {
-            return View(NoteData.GetNotesByGroupId(groupId));
+            IEnumerable<Note> notesList = new List<Note>();
+            if (groupId.HasValue)
+            {
+                notesList = NoteData.GetNotesByGroupId(groupId.Value);
+            }
+            else if (studentId.HasValue)
+            {
+                notesList = NoteData.GetNotesByStudentId(studentId.Value);
+            }
+            
+            return View(notesList);
         }
     }
 }

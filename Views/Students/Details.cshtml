@@ -1,0 +1,10 @@
+﻿@model ClassRoomManager.Models.StudentDetailsViewModel
+
+<h1>@Model.Student.Name</h1>
+
+<p>Asistencia: @Model.ClassesTaken/@Model.TotalClasses</p>
+
+<a asp-action="List" asp-controller="Groups" asp-route-groupId="@Model.Student.GroupId">Lista de Alumnos</a>
+
+<vc:notes-sidebar student-id="@Model.Student.StudentId" group-id="null"></vc:notes-sidebar>
+

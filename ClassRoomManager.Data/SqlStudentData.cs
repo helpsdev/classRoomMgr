@@ -97,5 +97,13 @@ namespace ClassRoomManager.Repositories
             }
             return todayClassDay;
         }
+
+        public ICollection<StudentClassDay> GetStudentClassDaysByStudentId(int studentId)
+        {
+            return ClassRoomManagerDbContext.StudentClassDays
+                .Include(scd => scd.Student)
+                .Where(scd => scd.StudentId == studentId)
+                .ToList();
+        }
     }
 }

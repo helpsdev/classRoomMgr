@@ -51,5 +51,14 @@ namespace ClassRoomManager.Repositories
                 .Update(note);
             ClassRoomManagerDbContext.SaveChanges();
         }
+
+        public IEnumerable<Note> GetNotesByStudentId(int studentId)
+        {
+            return ClassRoomManagerDbContext.Notes
+                .Include(n => n.Student)
+                    .ThenInclude(s => s.Group)
+                .Where(n => n.StudentId == studentId)
+                .ToList();
+        }
     }
 }

@@ -19,7 +19,7 @@
         @foreach (var student in Model.Students)
         {
             <tr>
-                <th><button type="button">Detalles</button></th>
+                <th><a asp-action="Details" asp-controller="Students" asp-route-studentId="@student.StudentId">Detalles</a></th>
                 <td>@Html.DisplayFor(modelItem => student.ListNumber)</td>
                 <td>@Html.DisplayFor(modelItem => student.Name)</td>
                 <td><input type="number" min="0" max="10" step="1" /></td>
@@ -51,7 +51,7 @@
     <vc:team-details team-id="@team.TeamId"></vc:team-details>
 }
 
-<vc:notes-sidebar group-id="@Model.GroupId"></vc:notes-sidebar>
+<vc:notes-sidebar group-id="@Model.GroupId" student-id="null"></vc:notes-sidebar>
 <a asp-route="Home">Inicio</a>
 
     <script type="text/javascript">
