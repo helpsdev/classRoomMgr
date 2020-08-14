@@ -17,31 +17,6 @@ namespace ClassRoomManager.Controllers
             ActivityData = activityData;
         }
 
-        public IActionResult List()
-        {
-            return View(ActivityData.GetAllActivities());
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(Activity activity)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    ActivityData.AddActivity(activity);
-                }
-                catch (Exception)
-                {
-                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
-                }
-            }
-            return RedirectToAction("List");
-        }
+        
     }
 }
