@@ -8,5 +8,6 @@ namespace ClassRoomManager.Repositories
     public interface IPeriodData
     {
         IEnumerable<Period> GetAllPeriods();
+        int AddPeriod(Period period);
     }
 }

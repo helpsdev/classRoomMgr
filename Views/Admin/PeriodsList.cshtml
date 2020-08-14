@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Period>
+
+<h1>PeriodsList</h1>
+
+<a asp-action="CreatePeriod">Nuevo Periodo</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var period in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => period.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => period.EndDate)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@period.PeriodId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@period.PeriodId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@period.PeriodId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

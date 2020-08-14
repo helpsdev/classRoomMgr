@@ -1,0 +1,22 @@
+﻿@model Period
+
+@{
+    ViewData["Title"] = "CreatePeriod";
+}
+
+<h1>CreatePeriod</h1>
+
+<h4>Period</h4>
+<hr />
+<form asp-action="CreatePeriod">
+    <label asp-for="StartDate"></label>
+    <input asp-for="StartDate" type="datetime-local"/>
+
+    <label asp-for="EndDate"></label>
+    <input asp-for="EndDate" type="datetime-local"/>
+
+    <button type="submit">Crear</button>
+</form>
+
+<a asp-action="Index">Back to List</a>
+

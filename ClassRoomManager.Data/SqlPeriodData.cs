@@ -16,5 +16,12 @@ namespace ClassRoomManager.Repositories
         {
             return ClassRoomManagerContext.Periods.ToList();
         }
+
+        public int AddPeriod(Period period)
+        {
+            ClassRoomManagerContext.Periods
+                .Add(period);
+            return ClassRoomManagerContext.SaveChanges();
+        }
     }
 }

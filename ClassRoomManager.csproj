@@ -37,8 +37,4 @@
     <ProjectReference Include="ClassRoomManager.Data\ClassRoomManager.Repositories.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Activities\" />
-  </ItemGroup>
-
 </Project>

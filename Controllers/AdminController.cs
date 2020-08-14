@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -11,18 +8,44 @@ namespace ClassRoomManager.Controllers
 {
     public class AdminController : Controller
     {
-        public IPeriodData PeriodsData { get; }
+        public IPeriodData PeriodData { get; }
         public IActivityData ActivityData { get; }
 
-        public AdminController(IPeriodData periodsData, IActivityData activityData)
+        public AdminController(IPeriodData periodData, IActivityData activityData)
         {
-            PeriodsData = periodsData;
+            PeriodData = periodData;
             ActivityData = activityData;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult PeriodsList()
+        {
+            return View(PeriodData.GetAllPeriods());
+        }
+
+        public IActionResult CreatePeriod()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreatePeriod(Period period)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    PeriodData.AddPeriod(period);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return View(period);
         }
 
         public IActionResult ActivitiesList()
