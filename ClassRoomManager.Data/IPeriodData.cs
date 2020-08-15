@@ -9,5 +9,6 @@ namespace ClassRoomManager.Repositories
     {
         IEnumerable<Period> GetAllPeriods();
         int AddPeriod(Period period);
+        int UpdatePeriod(Period period);
     }
 }

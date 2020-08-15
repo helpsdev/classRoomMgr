@@ -22,11 +22,11 @@ namespace ClassRoomManager.Controllers
             return View();
         }
 
+        #region Periods
         public IActionResult PeriodsList()
         {
             return View(PeriodData.GetAllPeriods());
         }
-
         public IActionResult CreatePeriod()
         {
             return View();
@@ -48,6 +48,23 @@ namespace ClassRoomManager.Controllers
             return View(period);
         }
 
+        public IActionResult EditPeriod(Period period)
+        {
+            try
+            {
+                PeriodData.UpdatePeriod(period);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return View(period);
+        }
+
+        #endregion
+
+        #region Activities
         public IActionResult ActivitiesList()
         {
             return View(ActivityData.GetAllActivities());
@@ -74,5 +91,7 @@ namespace ClassRoomManager.Controllers
             }
             return RedirectToAction("List");
         }
+        #endregion
+
     }
 }

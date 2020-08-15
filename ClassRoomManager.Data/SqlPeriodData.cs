@@ -23,5 +23,12 @@ namespace ClassRoomManager.Repositories
                 .Add(period);
             return ClassRoomManagerContext.SaveChanges();
         }
+
+        public int UpdatePeriod(Period period)
+        {
+            ClassRoomManagerContext.Periods
+                .Update(period);
+            return ClassRoomManagerContext.SaveChanges();
+        }
     }
 }
