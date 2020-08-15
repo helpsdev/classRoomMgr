@@ -48,6 +48,26 @@ namespace ClassRoomManager.Controllers
             return View(period);
         }
 
+        public IActionResult EditPeriod(int? periodId)
+        {
+            try
+            {
+                if (periodId == null)
+                {
+                    return NotFound();
+                }
+                var period = PeriodData.GetPeriodById(periodId.Value);
+
+                return View(period);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        [HttpPost]
         public IActionResult EditPeriod(Period period)
         {
             try

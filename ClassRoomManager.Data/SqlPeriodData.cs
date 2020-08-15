@@ -30,5 +30,11 @@ namespace ClassRoomManager.Repositories
                 .Update(period);
             return ClassRoomManagerContext.SaveChanges();
         }
+
+        public Period GetPeriodById(int periodId)
+        {
+            return ClassRoomManagerContext.Periods
+                .FirstOrDefault(p => p.PeriodId == periodId);
+        }
     }
 }
