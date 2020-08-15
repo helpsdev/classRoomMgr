@@ -2,6 +2,7 @@ using ClassRoomManager.Controllers;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,29 @@ namespace ClassRoomManager.Tests
                 (result as ViewResult).ViewData["ErrorMessage"].ToString());
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
+
+        [TestMethod]
+        public void EditPeriod_ReturnARedirectToActionResult_WhenDbUpdateExceptionOccurs()
+        {
+            //Arrange
+            var fakePeriodData = new FakePeriodData();
+            var controller = new AdminController(fakePeriodData, null);
+            //Act
+            var result = controller.EditPeriod(new Period { PeriodId = 1 });
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
+            Assert.AreEqual(nameof(controller.EditPeriod), (result as RedirectToActionResult).ActionName);
+            int periodIdRouteValue = int.Parse((result as RedirectToActionResult).RouteValues["PeriodId"].ToString());
+            Assert.AreEqual(1, periodIdRouteValue);
+            bool saveErrorsRouteValue = bool.Parse((result as RedirectToActionResult).RouteValues["saveErrors"].ToString());
+            Assert.IsTrue(saveErrorsRouteValue);
+        }
+
+        [TestMethod]
+        public void EditPeriod_ReturnAViewResult_WithPeriodAsModel_WhenParameterIsPeriodInstance()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class FakePeriodData : IPeriodData
@@ -63,7 +87,7 @@ namespace ClassRoomManager.Tests
 
         public int UpdatePeriod(Period period)
         {
-            throw new System.NotImplementedException();
+            throw new DbUpdateException();
         }
     }
 }
