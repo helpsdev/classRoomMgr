@@ -1,8 +1,11 @@
 ﻿@model ClassRoomManager.Models.Period
 
-<h1>EditPeriod</h1>
-
-<h4>Period</h4>
+<h1>Editar Periodo</h1>
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>
+}
+<p>Periodo @Model.StartDate.ToString("dd MMM yy") - @Model.EndDate.ToString("dd MMM yy")</p>
 <form asp-action="EditPeriod">
     <input type="hidden" asp-for="PeriodId" />
 

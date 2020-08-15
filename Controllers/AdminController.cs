@@ -3,6 +3,7 @@ using System.Net;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassRoomManager.Controllers
 {
@@ -48,15 +49,16 @@ namespace ClassRoomManager.Controllers
             return View(period);
         }
 
-        public IActionResult EditPeriod(int? periodId)
+        public IActionResult EditPeriod(int periodId, bool? saveErrors = false)
         {
             try
             {
-                if (periodId == null)
+                var period = PeriodData.GetPeriodById(periodId);
+
+                if (saveErrors.GetValueOrDefault())
                 {
-                    return NotFound();
+                    ViewBag.ErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
                 }
-                var period = PeriodData.GetPeriodById(periodId.Value);
 
                 return View(period);
             }
@@ -73,13 +75,13 @@ namespace ClassRoomManager.Controllers
             try
             {
                 PeriodData.UpdatePeriod(period);
+                
+                return View(period);
             }
-            catch (Exception ex)
+            catch (DbUpdateException ex)
             {
-
-                throw ex;
+                return RedirectToAction(nameof(EditPeriod), new {period.PeriodId, saveErrors = true });
             }
-            return View(period);
         }
 
         #endregion
