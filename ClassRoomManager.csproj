@@ -8,15 +8,19 @@
     <Compile Remove="ClassRoomManager.Data\**" />
     <Compile Remove="ClassRoomManager.Models\**" />
     <Compile Remove="ClassRoomManager.Repositories.Test\**" />
+    <Compile Remove="ClassRoomManager.Tests\**" />
     <Content Remove="ClassRoomManager.Data\**" />
     <Content Remove="ClassRoomManager.Models\**" />
     <Content Remove="ClassRoomManager.Repositories.Test\**" />
+    <Content Remove="ClassRoomManager.Tests\**" />
     <EmbeddedResource Remove="ClassRoomManager.Data\**" />
     <EmbeddedResource Remove="ClassRoomManager.Models\**" />
     <EmbeddedResource Remove="ClassRoomManager.Repositories.Test\**" />
+    <EmbeddedResource Remove="ClassRoomManager.Tests\**" />
     <None Remove="ClassRoomManager.Data\**" />
     <None Remove="ClassRoomManager.Models\**" />
     <None Remove="ClassRoomManager.Repositories.Test\**" />
+    <None Remove="ClassRoomManager.Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
