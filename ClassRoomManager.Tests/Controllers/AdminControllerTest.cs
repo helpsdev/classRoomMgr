@@ -57,9 +57,45 @@ namespace ClassRoomManager.Tests
         }
 
         [TestMethod]
-        public void EditPeriod_ReturnAViewResult_WithPeriodAsModel_WhenParameterIsPeriodInstance()
+        public void EditPeriod_ReturnAViewResult_WithPeriodAsModel_WhenUpdateIsSuccess()
+        {
+            //Arrange
+            var fakePeriodData2 = new FakePeriodData2();
+            var controller = new AdminController(fakePeriodData2, null);
+            var testPeriod = new Period
+            {
+                PeriodId = 1,
+                StartDate = DateTimeOffset.Now,
+                EndDate = DateTimeOffset.Now
+            };
+            //Act
+            var result = controller.EditPeriod(testPeriod);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(Period));
+            Assert.AreEqual(testPeriod, ((ViewResult)result).Model);
+        }
+    }
+    internal class FakePeriodData2 : IPeriodData
+    {
+        public int AddPeriod(Period period)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Period> GetAllPeriods()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Period GetPeriodById(int periodId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdatePeriod(Period period)
+        {
+            return 1;
         }
     }
 
