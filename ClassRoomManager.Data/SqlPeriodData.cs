@@ -36,5 +36,11 @@ namespace ClassRoomManager.Repositories
             return ClassRoomManagerContext.Periods
                 .FirstOrDefault(p => p.PeriodId == periodId);
         }
+
+        public int DeletePeriod(Period period)
+        {
+            ClassRoomManagerContext.Periods.Remove(period);
+            return ClassRoomManagerContext.SaveChanges();
+        }
     }
 }

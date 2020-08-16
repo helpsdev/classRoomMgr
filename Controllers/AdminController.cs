@@ -84,6 +84,44 @@ namespace ClassRoomManager.Controllers
             }
         }
 
+        public IActionResult Delete(int periodId, bool? saveErrors = false)
+        {
+            try
+            {
+                var period = PeriodData.GetPeriodById(periodId);
+
+                if (saveErrors.GetValueOrDefault())
+                {
+                    ViewBag.ErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
+                }
+
+                return View(period);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public IActionResult Delete(int periodId)
+        {
+            try
+            {
+                var periodToDelete = PeriodData.GetPeriodById(periodId);
+                if (periodToDelete == null)
+                {
+                    return NotFound();
+                }
+                PeriodData.DeletePeriod(periodToDelete);
+                return RedirectToAction(nameof(PeriodsList));
+            }
+            catch (DbUpdateException ex)
+            {
+                return RedirectToAction(nameof(Delete), new { periodId, saveErrors = true });
+            }
+        }
+
         #endregion
 
         #region Activities
