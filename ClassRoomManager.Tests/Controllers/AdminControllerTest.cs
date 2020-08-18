@@ -4,6 +4,7 @@ using ClassRoomManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 
@@ -16,8 +17,9 @@ namespace ClassRoomManager.Tests
         public void EditPeriod_ReturnsAViewResult_WithAPreriodAsModel()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
+            var fakePeriodData = new Mock<IPeriodData>();
+            fakePeriodData.Setup(p => p.GetPeriodById(1)).Returns(new Period { PeriodId = 1 });
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
             var result = controller.EditPeriod(periodId: 1, saveErrors: false);
             //Assert
@@ -29,8 +31,9 @@ namespace ClassRoomManager.Tests
         public void EditPeriod_ReturnsAViewResult_WithViewDataErrorMessageVariableSet()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
+            var fakePeriodData = new Mock<IPeriodData>();
+            fakePeriodData.Setup(p => p.GetPeriodById(1)).Returns(new Period { PeriodId = 1 });
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
             var result = controller.EditPeriod(periodId: 1, saveErrors: true);
             //Assert
@@ -43,9 +46,11 @@ namespace ClassRoomManager.Tests
         public void EditPeriod_ReturnARedirectToActionResult_WhenDbUpdateExceptionOccurs()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
+            var fakePeriodData = new Mock<IPeriodData>();
             var period = new Period { PeriodId = 1 };
+            fakePeriodData.Setup(p => p.UpdatePeriod(period)).Throws(new DbUpdateException());
+            var controller = new AdminController(fakePeriodData.Object, null);
+            
             //Act
             var result = controller.EditPeriod(period);
             //Assert
@@ -61,28 +66,31 @@ namespace ClassRoomManager.Tests
         public void EditPeriod_ReturnAViewResult_WithPeriodAsModel_WhenUpdateIsSuccess()
         {
             //Arrange
-            var fakePeriodData2 = new FakePeriodData2();
-            var controller = new AdminController(fakePeriodData2, null);
-            var testPeriod = new Period
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period
             {
                 PeriodId = 1,
                 StartDate = DateTimeOffset.Now,
                 EndDate = DateTimeOffset.Now
             };
+            fakePeriodData.Setup(p => p.UpdatePeriod(period)).Returns(1);
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
-            var result = controller.EditPeriod(testPeriod);
+            var result = controller.EditPeriod(period);
             //Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(Period));
-            Assert.AreEqual(testPeriod, ((ViewResult)result).Model);
+            Assert.AreEqual(period, ((ViewResult)result).Model);
         }
 
         [TestMethod]
         public void DeletePeriod_ReturnsAViewResult_WithPeriodAsModel_WhenSaveErrorsIsFalse()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period {PeriodId = 1 };
+            fakePeriodData.Setup(p => p.GetPeriodById(period.PeriodId)).Returns(period);
+            var controller = new AdminController(fakePeriodData.Object, null);
             var periodIdToDelete = 1;
             //Act
             var result = controller.Delete(periodIdToDelete, saveErrors:false);
@@ -95,11 +103,12 @@ namespace ClassRoomManager.Tests
         public void DeletePeriod_ReturnsAViewResult_WithPeriodAsModelAndErrorMessageSet_WhenSaveErrorIsTrue()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
-            var periodIdToDelete = 1;
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period { PeriodId = 1 };
+            fakePeriodData.Setup(p => p.GetPeriodById(period.PeriodId)).Returns(period);
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
-            var result = controller.Delete(periodIdToDelete, saveErrors: true);
+            var result = controller.Delete(period.PeriodId, saveErrors: true);
             //Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             Assert.AreEqual("Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.",
@@ -110,11 +119,12 @@ namespace ClassRoomManager.Tests
         public void DeletePeriod_ReturnsNotFoundResult_WhenPeriodNotExist()
         {
             //Arrange
-            var fakePeriodData2 = new FakePeriodData2();
-            var controller = new AdminController(fakePeriodData2, null);
-            var periodIdToDelete = 1;
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period { PeriodId = 1 };
+            fakePeriodData.Setup(p => p.GetPeriodById(period.PeriodId));
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
-            var result = controller.Delete(periodIdToDelete);
+            var result = controller.Delete(period.PeriodId);
             //Assert
             Assert.IsInstanceOfType(result, typeof(NotFoundResult));
         }
@@ -123,11 +133,13 @@ namespace ClassRoomManager.Tests
         public void DeletePeriod_ReturnsRedirectToActionResult_WhenSuccessfullyDeletePeriod()
         {
             //Arrange
-            var fakePeriodData = new FakePeriodData();
-            var controller = new AdminController(fakePeriodData, null);
-            var periodToDelete = 1;
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period { PeriodId = 1 };
+            fakePeriodData.Setup(p => p.GetPeriodById(period.PeriodId)).Returns(period);
+            fakePeriodData.Setup(p => p.DeletePeriod(period)).Returns(1);
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
-            var result = controller.Delete(periodToDelete);
+            var result = controller.Delete(period.PeriodId);
             //Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
             Assert.AreEqual(nameof(controller.PeriodsList), ((RedirectToActionResult)result).ActionName);
@@ -137,11 +149,13 @@ namespace ClassRoomManager.Tests
         public void DeletePeriod_ReturnsRedirectToActionResult_WhenDbUpdateExceptionOccurrs()
         {
             //Arrange
-            var fakePeriodData2 = new FakePeriodData2();
-            var controller = new AdminController(fakePeriodData2, null);
-            var periodToDelete = 1;
+            var fakePeriodData = new Mock<IPeriodData>();
+            var period = new Period { PeriodId = 1 };
+            fakePeriodData.Setup(p => p.GetPeriodById(period.PeriodId)).Returns(period);
+            fakePeriodData.Setup(p => p.DeletePeriod(period)).Throws(new DbUpdateException());
+            var controller = new AdminController(fakePeriodData.Object, null);
             //Act
-            var result = controller.Delete(periodToDelete);
+            var result = controller.Delete(period.PeriodId);
             //Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
             Assert.AreEqual(nameof(controller.Delete), ((RedirectToActionResult)result).ActionName);
@@ -149,66 +163,6 @@ namespace ClassRoomManager.Tests
             Assert.AreEqual(1, perioIdRouteValue);
             bool saveErrorsRouteValue = bool.Parse(((RedirectToActionResult)result).RouteValues["saveErrors"].ToString());
             Assert.IsTrue(saveErrorsRouteValue);
-        }
-    }
-    internal class FakePeriodData2 : IPeriodData
-    {
-        public int AddPeriod(Period period)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int DeletePeriod(Period period)
-        {
-            throw new DbUpdateException();
-        }
-
-        public IEnumerable<Period> GetAllPeriods()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Period GetPeriodById(int periodId)
-        {
-            return null;
-        }
-
-        public int UpdatePeriod(Period period)
-        {
-            return 1;
-        }
-    }
-
-    internal class FakePeriodData : IPeriodData
-    {
-        public int AddPeriod(Period period)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int DeletePeriod(Period period)
-        {
-            return 1;
-        }
-
-        public IEnumerable<Period> GetAllPeriods()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Period GetPeriodById(int periodId)
-        {
-            return new Period
-            {
-                PeriodId = periodId,
-                StartDate = new DateTime(2020,08,01,0,0,0),
-                EndDate = new DateTime(2020, 08, 31, 0, 0, 0)
-            };
-        }
-
-        public int UpdatePeriod(Period period)
-        {
-            throw new DbUpdateException();
         }
     }
 }
