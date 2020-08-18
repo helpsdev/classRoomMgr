@@ -1,0 +1,33 @@
+﻿@model ClassRoomManager.Models.Period
+
+
+<h1>DeletePeriod</h1>
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>
+}
+<p>Estas seguro que deseas eliminar este periodo?</p>
+<div>
+    <h4>Periodo</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+    </dl>
+
+    <form asp-action="DeletePeriod">
+        <input type="hidden" asp-for="PeriodId" />
+        <button type="submit">Eliminar</button> |
+        <a asp-action="PeriodsList">Cancelar</a>
+    </form>
+</div>

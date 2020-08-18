@@ -84,7 +84,7 @@ namespace ClassRoomManager.Controllers
             }
         }
 
-        public IActionResult Delete(int periodId, bool? saveErrors = false)
+        public IActionResult DeletePeriod(int periodId, bool? saveErrors = false)
         {
             try
             {
@@ -103,8 +103,8 @@ namespace ClassRoomManager.Controllers
             }
 
         }
-
-        public IActionResult Delete(int periodId)
+        [HttpPost]
+        public IActionResult DeletePeriod(int periodId)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace ClassRoomManager.Controllers
             }
             catch (DbUpdateException ex)
             {
-                return RedirectToAction(nameof(Delete), new { periodId, saveErrors = true });
+                return RedirectToAction(nameof(DeletePeriod), new { periodId, saveErrors = true });
             }
         }
 
