@@ -7,12 +7,66 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassRoomManager.Tests
 {
     [TestClass]
     public class AdminControllerTest
     {
+
+        [TestMethod]
+        public void CreatePeriod_ReturnsAViewResult()
+        {
+            //Arrange
+            var controller = new AdminController(null, null);
+            //Act
+            var result = controller.CreatePeriod();
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void CreatePeriod_ReturnsAViewResult_WithAPeriodAsModel_WhenModelStateIsInvalid()
+        {
+            //Arrange
+            var fakePeriodData = new Mock<IPeriodData>();
+            var controller = new AdminController(fakePeriodData.Object, null);
+            var period = new Period
+            {
+                PeriodId = 1,
+                StartDate = new DateTime(2020, 02, 01),
+                EndDate = new DateTime(2020, 01, 01)
+            };
+            //Act
+            controller.ModelState.AddModelError("Dates wrong", "The dates are wrong");
+            var result = controller.CreatePeriod(period);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            fakePeriodData.Verify(p => p.AddPeriod(period), Times.Never());
+            Assert.AreEqual(period, ((ViewResult)result).Model);
+        }
+
+        [TestMethod]
+        public void CreatePeriod_ReturnsAViewResult_WithAPeriodAsModel_WhenModelStateIsValid()
+        {
+            //Arrange
+            var fakePeriodData = new Mock<IPeriodData>();
+            var controller = new AdminController(fakePeriodData.Object, null);
+            var period = new Period
+            {
+                PeriodId = 1,
+                EndDate = new DateTime(2020, 02, 01),
+                StartDate = new DateTime(2020, 01, 01)
+            };
+            //Act
+            var result = controller.CreatePeriod(period);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            fakePeriodData.Verify(p => p.AddPeriod(period), Times.Once());
+            Assert.AreEqual(period, ((ViewResult)result).Model);
+        }
+
         [TestMethod]
         public void EditPeriod_ReturnsAViewResult_WithAPreriodAsModel()
         {
