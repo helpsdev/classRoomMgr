@@ -218,5 +218,99 @@ namespace ClassRoomManager.Tests
             bool saveErrorsRouteValue = bool.Parse(((RedirectToActionResult)result).RouteValues["saveErrors"].ToString());
             Assert.IsTrue(saveErrorsRouteValue);
         }
+
+        [TestMethod]
+        public void ActivitiesList_ReturnsAViewResult_WithIEnumerableActivityAsModel()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            fakeActivityData.Setup(a => a.GetAllActivities()).Returns(new List<Activity>());
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.ActivitiesList();
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsInstanceOfType(((ViewResult)result).Model, typeof(IEnumerable<Activity>));
+        }
+
+        [TestMethod]
+        public void CreateActivity_ReturnsAViewResult()
+        {
+            //Arrange
+            var controller = new AdminController(null, null);
+            //Act
+            var result = controller.CreateActivity();
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
+
+        [TestMethod]
+        public void CreateActivity_ReturnsAViewResultAndAddActivityIsNotCalled_WhenModelStateIsInvalid()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var controller = new AdminController(null, fakeActivityData.Object);
+            var activity = new Activity
+            {
+                ActivityId = 1,
+                CreationDate = DateTimeOffset.Now,
+                FinalEvaluationValue = 4,
+                ModificationDate = DateTimeOffset.Now,
+                Name = "test name",
+                Type = ActivityType.Grade
+            };
+            //Act
+            controller.ModelState.AddModelError("ModelInvalid", "Some error in stage");
+            var result = controller.CreateActivity(activity);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            fakeActivityData.Verify(a => a.AddActivity(activity), Times.Never);
+            Assert.AreEqual(activity, ((ViewResult)result).Model);
+
+        }
+
+        [TestMethod]
+        public void CreateActivity_ReturnsAViewResultAndAddActivityIsCalledOnce_WhenModelStateIsValid()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var activity = new Activity()
+            {
+                ActivityId = 1,
+                CreationDate = DateTimeOffset.Now,
+                ModificationDate = DateTimeOffset.Now,
+                FinalEvaluationValue = 4,
+                Name = "test activity name",
+                Type = ActivityType.Grade
+            };
+            fakeActivityData.Setup(a => a.AddActivity(activity)).Returns(1);
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.CreateActivity(activity);
+            //Assert
+            fakeActivityData.Verify(a => a.AddActivity(activity), Times.Once());
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.AreEqual(activity, ((ViewResult)result).Model);
+
+        }
+
+        [TestMethod]
+        public void EditActivity_ReturnsAViewResult_WithActivityAsModel()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var activity = new Activity
+            {
+                ActivityId = 1
+            };
+            fakeActivityData.Setup(a => a.GetActivityById(activity.ActivityId)).Returns(activity);
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.EditActivity(activity.ActivityId);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.AreEqual(activity, ((ViewResult)result).Model);
+
+        }
     }
 }

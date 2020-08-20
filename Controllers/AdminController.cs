@@ -146,12 +146,26 @@ namespace ClassRoomManager.Controllers
                 {
                     ActivityData.AddActivity(activity);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                    throw ex;
                 }
             }
-            return RedirectToAction("List");
+            return View(activity);
+        }
+
+        public IActionResult EditActivity(int activityId)
+        {
+            try
+            {
+                var activity = ActivityData.GetActivityById(activityId);
+                return View(activity);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
         #endregion
 

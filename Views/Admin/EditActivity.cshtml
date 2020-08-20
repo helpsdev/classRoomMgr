@@ -1,0 +1,26 @@
+﻿@model ClassRoomManager.Models.Activity
+
+<h1>EditActivity</h1>
+
+<h4>Activity</h4>
+<hr />
+<form asp-action="EditActivity">
+    <input type="hidden" asp-for="ActivityId" />
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+
+    <label asp-for="FinalEvaluationValue" class="control-label"></label>
+    <input asp-for="FinalEvaluationValue" class="form-control" />
+
+    <label asp-for="Type" class="control-label"></label>
+    <select asp-for="Type" asp-items="Html.GetEnumSelectList<ActivityType>()">
+        <optgroup label="Tipo de Actividad"></optgroup>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+
+<div>
+    <a asp-action="ActivitiesList">Lista de actividades</a>
+</div>
+

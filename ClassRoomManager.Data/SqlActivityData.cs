@@ -50,5 +50,11 @@ namespace ClassRoomManager.Repositories
             ClassRoomManagerContext.ActivityAssignments.UpdateRange(activityAssignments);
             return ClassRoomManagerContext.SaveChanges();
         }
+
+        public Activity GetActivityById(int activityId)
+        {
+            return ClassRoomManagerContext.Activities
+                .First(a => a.ActivityId == activityId);
+        }
     }
 }

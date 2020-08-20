@@ -14,5 +14,6 @@ namespace ClassRoomManager.Repositories
         IEnumerable<ActivityAssignment> GetActivitiesAssignedByGroupId(int groupId);
         int UpdateActivityAssignments(IEnumerable<ActivityAssignment> activityAssignments);
         DateTimeOffset GetDateTimeOffset();
+        Activity GetActivityById(int activityId);
     }
 }
