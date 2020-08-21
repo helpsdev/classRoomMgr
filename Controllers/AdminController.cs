@@ -167,6 +167,18 @@ namespace ClassRoomManager.Controllers
                 throw ex;
             }
         }
+
+        [HttpPost]
+        public IActionResult EditActivity(Activity activity)
+        {
+            if (ModelState.IsValid)
+            {
+                ActivityData.UpdateActivity(activity);
+            }
+                
+            return View(activity);
+            
+        }
         #endregion
 
     }

@@ -312,5 +312,23 @@ namespace ClassRoomManager.Tests
             Assert.AreEqual(activity, ((ViewResult)result).Model);
 
         }
+
+        [TestMethod]
+        public void EditActivity_ReturnsAViewResult_WhenModelStateIsValid()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var activity = new Activity();
+            fakeActivityData.Setup(a => a.UpdateActivity(activity)).Returns(1);
+            var controller = new AdminController(null, fakeActivityData.Object);
+            
+            //Act
+            var result = controller.EditActivity(activity);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.AreEqual(activity, ((ViewResult)result).Model);
+            fakeActivityData.Verify(a => a.UpdateActivity(activity), Times.Once());
+
+        }
     }
 }
