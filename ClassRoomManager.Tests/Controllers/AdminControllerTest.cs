@@ -330,5 +330,23 @@ namespace ClassRoomManager.Tests
             fakeActivityData.Verify(a => a.UpdateActivity(activity), Times.Once());
 
         }
+
+        [TestMethod]
+        public void EditActivity_ReturnsAViewResult_WhenModelStateIsInvalid()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var controller = new AdminController(null, fakeActivityData.Object);
+            var activity = new Activity();
+            //Act
+            controller.ModelState.AddModelError("ActivityValidation", "Activity is not valid");
+            var result = controller.EditActivity(activity);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.AreEqual(activity, ((ViewResult)result).Model);
+            fakeActivityData.Verify(a => a.UpdateActivity(activity), Times.Never());
+        }
+
+        
     }
 }
