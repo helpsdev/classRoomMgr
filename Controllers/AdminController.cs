@@ -171,12 +171,19 @@ namespace ClassRoomManager.Controllers
         [HttpPost]
         public IActionResult EditActivity(Activity activity)
         {
-            if (ModelState.IsValid)
+            try
             {
-                ActivityData.UpdateActivity(activity);
+                if (ModelState.IsValid)
+                {
+                    ActivityData.UpdateActivity(activity);
+                }
+
+                return View(activity);
             }
-                
-            return View(activity);
+            catch (DbUpdateException ex)
+            {
+                return RedirectToAction(nameof(EditActivity), new { activity.ActivityId, saveErrors = true });
+            }
             
         }
         #endregion

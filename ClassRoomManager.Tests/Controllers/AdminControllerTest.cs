@@ -347,6 +347,27 @@ namespace ClassRoomManager.Tests
             fakeActivityData.Verify(a => a.UpdateActivity(activity), Times.Never());
         }
 
-        
+        [TestMethod]
+        public void EditActivity_ReturnsARedirectToActionResult_WhenDbUpdateExceptionIsThrown()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var activity = new Activity
+            {
+                ActivityId = 1
+            };
+            fakeActivityData.Setup(a => a.UpdateActivity(activity)).Throws(new DbUpdateException());
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.EditActivity(activity);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
+            Assert.AreEqual(nameof(controller.EditActivity), ((RedirectToActionResult)result).ActionName);
+            int activityIdRouteValue = int.Parse(((RedirectToActionResult)result).RouteValues[nameof(activity.ActivityId)].ToString());
+            Assert.AreEqual(activity.ActivityId, activityIdRouteValue);
+            bool saveErrorsRouteValue = bool.Parse(((RedirectToActionResult)result).RouteValues["saveErrors"].ToString());
+            Assert.IsTrue(saveErrorsRouteValue);
+
+        }
     }
 }
