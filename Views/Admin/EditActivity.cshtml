@@ -2,6 +2,10 @@
 
 <h1>EditActivity</h1>
 @Html.ValidationSummary()
+@if (ViewBag.ErrorMessage != null)
+{
+    <p>@ViewBag.ErrorMessage</p>		 
+}
 <h4>Activity</h4>
 <hr />
 <form asp-action="EditActivity">

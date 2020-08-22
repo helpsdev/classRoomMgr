@@ -11,6 +11,7 @@ namespace ClassRoomManager.Controllers
 {
     public class AdminController : Controller
     {
+        private const string EditErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
         public IPeriodData PeriodData { get; }
         public IActivityData ActivityData { get; }
 
@@ -59,7 +60,7 @@ namespace ClassRoomManager.Controllers
 
                 if (saveErrors.GetValueOrDefault())
                 {
-                    ViewBag.ErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
+                    ViewBag.ErrorMessage = EditErrorMessage;
                 }
 
                 return View(period);
@@ -94,7 +95,7 @@ namespace ClassRoomManager.Controllers
 
                 if (saveErrors.GetValueOrDefault())
                 {
-                    ViewBag.ErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
+                    ViewBag.ErrorMessage = EditErrorMessage;
                 }
 
                 return View(period);
@@ -154,11 +155,15 @@ namespace ClassRoomManager.Controllers
             return View(activity);
         }
 
-        public IActionResult EditActivity(int activityId)
+        public IActionResult EditActivity(int activityId, bool? saveErrors = false)
         {
             try
             {
                 var activity = ActivityData.GetActivityById(activityId);
+                if (saveErrors.GetValueOrDefault())
+                {
+                    ViewBag.ErrorMessage = EditErrorMessage;
+                }
                 return View(activity);
             }
             catch (Exception ex)

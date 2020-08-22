@@ -14,7 +14,7 @@ namespace ClassRoomManager.Tests
     [TestClass]
     public class AdminControllerTest
     {
-
+        private const string EditErrorMessage = "Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.";
         [TestMethod]
         public void CreatePeriod_ReturnsAViewResult()
         {
@@ -91,7 +91,7 @@ namespace ClassRoomManager.Tests
             //Act
             var result = controller.EditPeriod(periodId: 1, saveErrors: true);
             //Assert
-            Assert.AreEqual("Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.", 
+            Assert.AreEqual(EditErrorMessage, 
                 (result as ViewResult).ViewData["ErrorMessage"].ToString());
             Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
@@ -165,7 +165,7 @@ namespace ClassRoomManager.Tests
             var result = controller.DeletePeriod(period.PeriodId, saveErrors: true);
             //Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
-            Assert.AreEqual("Hubo un error al guardar la información. Intenta de nuevo, si el problema persiste llama al administrador del sitio.",
+            Assert.AreEqual(EditErrorMessage,
                 ((ViewResult)result).ViewData["ErrorMessage"].ToString());
         }
 
@@ -311,6 +311,34 @@ namespace ClassRoomManager.Tests
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             Assert.AreEqual(activity, ((ViewResult)result).Model);
 
+        }
+
+        [TestMethod]
+        public void EditActivity_ReturnsAViewResult_WithErrorMessageSetInViewBag_WhenSaveErrorsIsTrue()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.EditActivity(1, saveErrors: true);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsNotNull(((ViewResult)result).ViewData["ErrorMessage"]);
+            Assert.AreEqual(EditErrorMessage, ((ViewResult)result).ViewData["ErrorMessage"].ToString());
+
+        }
+
+        [TestMethod]
+        public void EditActivity_ReturnsAViewResult_WithErrorMessageNullInViewBag_WhenSaveErrorsIsFalse()
+        {
+            //Arrange
+            var fakeActivityData = new Mock<IActivityData>();
+            var controller = new AdminController(null, fakeActivityData.Object);
+            //Act
+            var result = controller.EditActivity(1, saveErrors:false);
+            //Assert
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsNull(((ViewResult)result).ViewData["ErrorMessage"]);
         }
 
         [TestMethod]
