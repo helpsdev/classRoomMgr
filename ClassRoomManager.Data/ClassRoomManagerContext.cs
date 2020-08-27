@@ -20,6 +20,7 @@ namespace ClassRoomManager.Repositories
         public DbSet<Period> Periods { get; set; }
         public DbSet<StudentClassDay> StudentClassDays { get; set; }
         public DbSet<ClassDay> ClassDays { get; set; }
+        public DbSet<StudentFinalGrade> StudentFinalGrades { get; set; }
 
         public ClassRoomManagerContext(DbContextOptions<ClassRoomManagerContext> options) : base(options)
         {
@@ -37,6 +38,7 @@ namespace ClassRoomManager.Repositories
             modelBuilder.Entity<Period>().ToTable("Period");
             modelBuilder.Entity<StudentClassDay>().ToTable("StudentClassDay");
             modelBuilder.Entity<ClassDay>().ToTable("ClassDay");
+            modelBuilder.Entity<StudentFinalGrade>().ToTable("StudentFinalGrade");
         }
     }
 }
