@@ -16,5 +16,9 @@ namespace ClassRoomManager.Models
         public Student Student { get; set; }
         public int PeriodId { get; set; }
         public Period Period { get; set; }
+        [NotMapped]
+        public string AssistanceSummary { get; set; }
+        [NotMapped]
+        public string ActivitiesSummary { get; set; }
     }
 }
