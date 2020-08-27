@@ -27,5 +27,10 @@ namespace ClassRoomManager.Controllers
                 ClassesTaken = studentClassDayList.Where(scd => scd.Assistance == true).Count()
             });
         }
+
+        public IActionResult FinalGrades(int? periodId, int? groupId)
+        {
+            return View();
+        }
     }
 }
