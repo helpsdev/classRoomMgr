@@ -11,35 +11,21 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                CreationDate
-            </th>
-            <th>
-                ModifiedDate
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Nombre
-            </th>
+            <th>CreationDate</th>
+            <th>ModifiedDate</th>
+            <th>Description</th>
+            <th>Nombre</th>
+            <th>Periodo</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Notes) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModificationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student.StudentId)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.CreationDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.ModificationDate)</td>
+            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+            <td>@Html.DisplayFor(modelItem => item.Student.StudentId)</td>
+            <td>@string.Format("{0:d/M/yyyy} - {1:d/M/yyyy}", item.Period.StartDate, item.Period.EndDate)</td>
             <td>
                 <a asp-route="EditNoteForm" asp-route-noteId="@item.NoteId">Edit</a>
             </td>

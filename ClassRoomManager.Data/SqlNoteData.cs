@@ -25,6 +25,7 @@ namespace ClassRoomManager.Repositories
         public IEnumerable<Note> GetAllNotes()
         {
             return ClassRoomManagerDbContext.Notes
+                .Include(n => n.Period)
                 .ToList();
         }
 
@@ -39,6 +40,7 @@ namespace ClassRoomManager.Repositories
         public IEnumerable<Note> GetNotesByGroupId(int groupId)
         {
             return ClassRoomManagerDbContext.Notes
+                .Include(n => n.Period)
                 .Include(n => n.Student)
                     .ThenInclude(s => s.Group)
                 .Where(n => n.Student.Group.GroupId == groupId)
