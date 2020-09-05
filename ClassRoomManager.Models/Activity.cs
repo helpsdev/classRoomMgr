@@ -12,7 +12,7 @@ namespace ClassRoomManager.Models
         public ActivityType Type { get; set; }
         public DateTimeOffset CreationDate { get; set; }
         public DateTimeOffset ModificationDate { get; set; }
-        public int? PeriodId { get; set; }
+        public int PeriodId { get; set; }
         public Period Period { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace ClassRoomManager.Models
         public int StudentId { get; set; }
         public string Description { get; set; }
         public int NoteId { get; set; }
-        public int? PeriodId { get; set; }
+        public int PeriodId { get; set; }
         public Period Period { get; set; }
     }
 }
