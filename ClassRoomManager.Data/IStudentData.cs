@@ -15,5 +15,6 @@ namespace ClassRoomManager.Repositories
         int AddOrUpdateStudentClassDay(StudentClassDay studentClassDay);
         ICollection<StudentClassDay> GetStudentClassDaysByStudentId(int studentId);
         ClassDay GetTodayClassDay();
+        ICollection<StudentFinalGrade> GetAllStudentFinalGrades();
     }
 }

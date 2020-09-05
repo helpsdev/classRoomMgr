@@ -105,5 +105,10 @@ namespace ClassRoomManager.Repositories
                 .Where(scd => scd.StudentId == studentId)
                 .ToList();
         }
+
+        public ICollection<StudentFinalGrade> GetAllStudentFinalGrades()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

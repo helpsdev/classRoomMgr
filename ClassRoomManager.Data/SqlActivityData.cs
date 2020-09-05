@@ -25,7 +25,9 @@ namespace ClassRoomManager.Repositories
 
         public IEnumerable<Activity> GetAllActivities()
         {
-            return ClassRoomManagerContext.Activities.ToList();
+            return ClassRoomManagerContext.Activities
+                .Include(a => a.Period)
+                .ToList();
         }
 
         public int UpdateActivity(Activity activity)
