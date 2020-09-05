@@ -4,14 +4,16 @@ using ClassRoomManager.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ClassRoomManager.Repositories.Migrations
 {
     [DbContext(typeof(ClassRoomManagerContext))]
-    partial class ClassRoomManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20200905005914_AddNullablePeriodIdTo_Activity_Note_ClassDay")]
+    partial class AddNullablePeriodIdTo_Activity_Note_ClassDay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +47,6 @@ namespace ClassRoomManager.Repositories.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ActivityId");
-
-                    b.HasIndex("PeriodId");
 
                     b.ToTable("Activity");
                 });
@@ -94,8 +94,6 @@ namespace ClassRoomManager.Repositories.Migrations
 
                     b.HasKey("ClassDayId");
 
-                    b.HasIndex("PeriodId");
-
                     b.ToTable("ClassDay");
                 });
 
@@ -137,8 +135,6 @@ namespace ClassRoomManager.Repositories.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("NoteId");
-
-                    b.HasIndex("PeriodId");
 
                     b.HasIndex("StudentId");
 
@@ -268,13 +264,6 @@ namespace ClassRoomManager.Repositories.Migrations
                     b.ToTable("Team");
                 });
 
-            modelBuilder.Entity("ClassRoomManager.Models.Activity", b =>
-                {
-                    b.HasOne("ClassRoomManager.Models.Period", "Period")
-                        .WithMany()
-                        .HasForeignKey("PeriodId");
-                });
-
             modelBuilder.Entity("ClassRoomManager.Models.ActivityAssignment", b =>
                 {
                     b.HasOne("ClassRoomManager.Models.Activity", "Activity")
@@ -290,19 +279,8 @@ namespace ClassRoomManager.Repositories.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ClassRoomManager.Models.ClassDay", b =>
-                {
-                    b.HasOne("ClassRoomManager.Models.Period", "Period")
-                        .WithMany()
-                        .HasForeignKey("PeriodId");
-                });
-
             modelBuilder.Entity("ClassRoomManager.Models.Note", b =>
                 {
-                    b.HasOne("ClassRoomManager.Models.Period", "Period")
-                        .WithMany()
-                        .HasForeignKey("PeriodId");
-
                     b.HasOne("ClassRoomManager.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
