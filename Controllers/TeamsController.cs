@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ClassRoomManager.InputModels;
 using ClassRoomManager.Models;
 using ClassRoomManager.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassRoomManager.Controllers
@@ -75,18 +76,17 @@ namespace ClassRoomManager.Controllers
                     foreach (var teamDetailsInputModel in teamDetailsInputModels)
                     {
                         StudentData.AddOrUpdateStudentClassDay(teamDetailsInputModel.StudentClassDay);
-
                         ActivityData.UpdateActivityAssignments(teamDetailsInputModel.ActivityAssignments);
                     }
                 }
                 catch (Exception ex)
                 {
-                    return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+                    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
                 }
 
             }
 
-            return new StatusCodeResult((int)HttpStatusCode.OK);
+            return Ok();
         }
     }
 }

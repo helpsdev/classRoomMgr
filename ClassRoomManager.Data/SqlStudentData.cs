@@ -40,7 +40,10 @@ namespace ClassRoomManager.Repositories
 
         public int AddOrUpdateStudentClassDay(StudentClassDay studentClassDay)
         {
-            if (studentClassDay.StudentClassDayId == 0 || ClassRoomManagerDbContext.StudentClassDays.Find(studentClassDay.StudentClassDayId) == null)
+            bool studentClassDayDoesNotExists = studentClassDay.StudentClassDayId == 0 ||
+                ClassRoomManagerDbContext.StudentClassDays.Find(studentClassDay.StudentClassDayId) == null;
+
+            if (studentClassDayDoesNotExists)
             {
                 return AddStudentClassDay(studentClassDay);
             }
@@ -93,9 +96,23 @@ namespace ClassRoomManager.Repositories
                 {
                     DateTime = DateTimeOffset.Now.Date
                 };
+                todayClassDay.Period = GetPriodForClassDay(todayClassDay);
+
+                if (todayClassDay.Period == null) throw new InvalidOperationException($"There is no Period for the current ClassDay date:{todayClassDay.DateTime}");
+
+                /*Not calling context.SaveChanges since this is being used
+                 as part of another operation*/
                 ClassRoomManagerDbContext.ClassDays.Add(todayClassDay);
             }
             return todayClassDay;
+        }
+
+        public Period GetPriodForClassDay(ClassDay classDay)
+        {
+            if (classDay == null) throw new ArgumentException("classDay");
+
+            return ClassRoomManagerDbContext.Periods
+                .FirstOrDefault(p => p.StartDate >= classDay.DateTime && p.EndDate <= classDay.DateTime);
         }
 
         public ICollection<StudentClassDay> GetStudentClassDaysByStudentId(int studentId)

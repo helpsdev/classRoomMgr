@@ -90,12 +90,15 @@
 @section scripts{ 
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
-        const teamDetailsForm = document.querySelector("[data-team-details]");
+        const teamDetailsForm = document.querySelector("form[data-team-details]");
         teamDetailsForm.addEventListener("submit", ev => {
             const submittingForm = ev.target;
             ev.preventDefault();
             const ajaxCall = new XMLHttpRequest();
+            /*Change this for onreadystatechanged event to handle errors*/
             ajaxCall.addEventListener("load", () => window.location.reload(true));
+            /*Network related problems event*/
+            ajaxCall.addEventListener("error", error => console.log(error));
             ajaxCall.open("POST", submittingForm.getAttribute("action"));
             ajaxCall.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             ajaxCall.send(JSON.stringify(getPostData(submittingForm)));
@@ -120,7 +123,7 @@
             .forEach(team => {
                 team.addEventListener("click", e => {
                     const selectedTeamId = e.currentTarget.getAttribute("data-team-id");
-                    const selectedTeamTbodies = document.querySelectorAll(`[data-team-details] [data-student-team-id="${selectedTeamId}"]`);
+                    const selectedTeamTbodies = document.querySelectorAll(`table[data-team-details] [data-student-team-id="${selectedTeamId}"]`);
 
                     selectedTeamTbodies.forEach(tbody => {
                         tbody.style.display = tbody.style.display === "block" ? "none" : "block";
