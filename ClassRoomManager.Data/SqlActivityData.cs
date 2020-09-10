@@ -19,8 +19,21 @@ namespace ClassRoomManager.Repositories
         {
             activity.CreationDate =
                 activity.ModificationDate = GetDateTimeOffset();
+
+            var period = GetPriodForDate(activity.CreationDate);
+
+            if(period == null) throw new InvalidOperationException($"There is no Period for the date: {activity.CreationDate.Date}");
+
+            activity.Period = period;
+
             ClassRoomManagerContext.Activities.Add(activity);
             return ClassRoomManagerContext.SaveChanges();
+        }
+
+        public Period GetPriodForDate(DateTimeOffset targetDate)
+        {
+            return ClassRoomManagerContext.Periods
+                .FirstOrDefault(p => p.StartDate.Date <= targetDate.Date && p.EndDate.Date >= targetDate.Date);
         }
 
         public IEnumerable<Activity> GetAllActivities()
