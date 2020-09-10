@@ -112,7 +112,7 @@ namespace ClassRoomManager.Repositories
             if (classDay == null) throw new ArgumentException("classDay");
 
             return ClassRoomManagerDbContext.Periods
-                .FirstOrDefault(p => p.StartDate >= classDay.DateTime && p.EndDate <= classDay.DateTime);
+                .FirstOrDefault(p => p.StartDate.Date <= classDay.DateTime.Date && p.EndDate.Date >= classDay.DateTime.Date);
         }
 
         public ICollection<StudentClassDay> GetStudentClassDaysByStudentId(int studentId)

@@ -96,7 +96,17 @@
             ev.preventDefault();
             const ajaxCall = new XMLHttpRequest();
             /*Change this for onreadystatechanged event to handle errors*/
-            ajaxCall.addEventListener("load", () => window.location.reload(true));
+            ajaxCall.onreadystatechange = () => {
+                if (ajaxCall.readyState === ajaxCall.DONE) {
+
+                    if (ajaxCall.status >= 200 && ajaxCall.status < 400) {
+                        const forceReload = true;
+                        window.location.reload(forceReload);
+                    } else {
+                        console.log(ajaxCall.responseText);
+                    }
+                } 
+            };
             /*Network related problems event*/
             ajaxCall.addEventListener("error", error => console.log(error));
             ajaxCall.open("POST", submittingForm.getAttribute("action"));

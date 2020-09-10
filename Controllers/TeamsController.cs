@@ -79,9 +79,13 @@ namespace ClassRoomManager.Controllers
                         ActivityData.UpdateActivityAssignments(teamDetailsInputModel.ActivityAssignments);
                     }
                 }
+                catch(InvalidOperationException ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
                 catch (Exception ex)
                 {
-                    return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                    return StatusCode(StatusCodes.Status500InternalServerError);
                 }
 
             }
