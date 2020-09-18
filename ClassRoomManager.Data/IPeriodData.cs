@@ -12,5 +12,6 @@ namespace ClassRoomManager.Repositories
         int UpdatePeriod(Period period);
         Period GetPeriodById(int periodId);
         int DeletePeriod(Period period);
+        Period GetPeriodForDate(DateTimeOffset targetDateTime);
     }
 }

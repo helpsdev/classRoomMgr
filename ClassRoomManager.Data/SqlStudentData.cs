@@ -96,9 +96,9 @@ namespace ClassRoomManager.Repositories
                 {
                     DateTime = DateTimeOffset.Now.Date
                 };
-                todayClassDay.Period = GetPriodForClassDay(todayClassDay);
-
-                if (todayClassDay.Period == null) throw new InvalidOperationException($"There is no Period for the current ClassDay date:{todayClassDay.DateTime}");
+                //TODO: Replace this with IPeriodData.GetPriodForDate
+                var period = GetPriodForClassDay(todayClassDay);
+                todayClassDay.Period = period ?? throw new InvalidOperationException($"There is no Period for the current ClassDay date:{todayClassDay.DateTime}");
 
                 /*Not calling context.SaveChanges since this is being used
                  as part of another operation*/
@@ -106,7 +106,7 @@ namespace ClassRoomManager.Repositories
             }
             return todayClassDay;
         }
-
+        //TODO: Remove this to use IPeriodData.GetPriodForDate instead
         public Period GetPriodForClassDay(ClassDay classDay)
         {
             if (classDay == null) throw new ArgumentException("classDay");

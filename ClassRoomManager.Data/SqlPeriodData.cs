@@ -1,4 +1,5 @@
 ﻿using ClassRoomManager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,6 +42,12 @@ namespace ClassRoomManager.Repositories
         {
             ClassRoomManagerContext.Periods.Remove(period);
             return ClassRoomManagerContext.SaveChanges();
+        }
+
+        public Period GetPriodForDate(DateTimeOffset targetDateTime)
+        {
+            return ClassRoomManagerContext.Periods
+                .FirstOrDefault(p => p.StartDate.Date <= targetDateTime.Date && p.EndDate.Date >= targetDateTime.Date);
         }
     }
 }
