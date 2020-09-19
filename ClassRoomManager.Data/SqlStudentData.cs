@@ -123,9 +123,35 @@ namespace ClassRoomManager.Repositories
                 .ToList();
         }
 
-        public ICollection<StudentFinalGrade> GetAllStudentFinalGrades()
+        public ICollection<StudentFinalGrade> GetAllStudentFinalGrades(int periodId)
         {
-            throw new NotImplementedException();
+            var activityAssignmentsByGradeByPeriod = ClassRoomManagerDbContext.ActivityAssignments
+                .Include(aa => aa.Activity)
+                    .ThenInclude(a => a.Period)
+                .Include(aa => aa.Student)
+                .Where(aa => aa.Activity.Type == ActivityType.Grade && aa.Activity.PeriodId == periodId)
+                .AsEnumerable();
+            
+            var activityAssignmentsGroupedByStudentId = activityAssignmentsByGradeByPeriod
+                .GroupBy(aa => aa.StudentId)
+                .ToDictionary(aa => aa.Key, aa => aa.AsEnumerable());
+
+            var t = new List<StudentFinalGrade>();
+
+            foreach (var studentId in activityAssignmentsGroupedByStudentId.Keys)
+            {
+                t.Add(new StudentFinalGrade
+                {
+                    StudentId = studentId,
+                    FinalGrade = activityAssignmentsGroupedByStudentId[studentId].Sum(aa => aa.Grade * aa.Activity.FinalEvaluationValue),
+                    CreationDate = DateTimeOffset.Now,
+                    ModificationDate = DateTimeOffset.Now,
+                    PeriodId = periodId,
+                    Student = activityAssignmentsGroupedByStudentId[studentId].Select(aa => aa.Student).FirstOrDefault()
+                });
+            }
+
+            return t;
         }
     }
 }

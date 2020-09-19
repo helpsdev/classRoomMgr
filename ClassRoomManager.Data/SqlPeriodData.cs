@@ -44,7 +44,7 @@ namespace ClassRoomManager.Repositories
             return ClassRoomManagerContext.SaveChanges();
         }
 
-        public Period GetPriodForDate(DateTimeOffset targetDateTime)
+        public Period GetPeriodForDate(DateTimeOffset targetDateTime)
         {
             return ClassRoomManagerContext.Periods
                 .FirstOrDefault(p => p.StartDate.Date <= targetDateTime.Date && p.EndDate.Date >= targetDateTime.Date);

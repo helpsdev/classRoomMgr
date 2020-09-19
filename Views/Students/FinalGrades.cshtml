@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<StudentFinalGrade>
 
 <h1>Calificacion Final</h1>
 
@@ -25,6 +25,15 @@
             </tr>
         </thead>
         <tbody>
+            @foreach (var studentFinalGrade in Model)
+            {
+                <tr>
+                    <td>@studentFinalGrade.Student.Name</td>
+                    <td></td>
+                    <td></td>
+                    <td>@studentFinalGrade.FinalGrade</td>
+                </tr>
+            }
         </tbody>
     </table>
     <button type="submit">Guardar</button>

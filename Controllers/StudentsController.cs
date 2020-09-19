@@ -30,7 +30,7 @@ namespace ClassRoomManager.Controllers
 
         public IActionResult FinalGrades(int? periodId, int? groupId)
         {
-            return View();
+            return View(StudentData.GetAllStudentFinalGrades(1));
         }
     }
 }
