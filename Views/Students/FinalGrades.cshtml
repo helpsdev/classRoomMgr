@@ -31,7 +31,9 @@
                     <td>@studentFinalGrade.Student.Name</td>
                     <td>@studentFinalGrade.AssistanceSummary</td>
                     <td>@studentFinalGrade.ActivitiesSummary</td>
-                    <td>@studentFinalGrade.FinalGrade</td>
+                    <td>
+                        <input type="number" min="1" max="10" value="@studentFinalGrade.FinalGrade.ToString("F2")"/>
+                    </td>
                 </tr>
             }
         </tbody>
