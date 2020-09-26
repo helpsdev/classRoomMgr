@@ -145,6 +145,10 @@ namespace ClassRoomManager.Repositories
                     .Where(scd => scd.StudentId == studentId && scd.ClassDay.PeriodId == periodId);
 
 
+                var activityAssignments = ClassRoomManagerDbContext.ActivityAssignments
+                    .Include(aa => aa.Activity)
+                    .Where(aa => aa.StudentId == studentId && aa.Activity.Type == ActivityType.Task && aa.Activity.PeriodId == periodId);
+
                 studentFinalGradeList.Add(new StudentFinalGrade
                 {
                     StudentId = studentId,
@@ -153,7 +157,8 @@ namespace ClassRoomManager.Repositories
                     ModificationDate = DateTimeOffset.Now,
                     PeriodId = periodId,
                     Student = activityAssignmentsGroupedByStudentId[studentId].Select(aa => aa.Student).FirstOrDefault(),
-                    AssistanceSummary = $"{studentClassDaysByStudentByPeriod.Where(scd => scd.Assistance == true).Count()}/{studentClassDaysByStudentByPeriod.Count()}"
+                    AssistanceSummary = $"{studentClassDaysByStudentByPeriod.Where(scd => scd.Assistance == true).Count()}/{studentClassDaysByStudentByPeriod.Count()}",
+                    ActivitiesSummary = $"{activityAssignments.Where(aa => aa.Completed).Count()}/{activityAssignments.Count()}"
                 });
             }
 
