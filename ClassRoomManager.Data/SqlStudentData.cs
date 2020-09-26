@@ -136,22 +136,28 @@ namespace ClassRoomManager.Repositories
                 .GroupBy(aa => aa.StudentId)
                 .ToDictionary(aa => aa.Key, aa => aa.AsEnumerable());
 
-            var t = new List<StudentFinalGrade>();
+            var studentFinalGradeList = new List<StudentFinalGrade>();
 
             foreach (var studentId in activityAssignmentsGroupedByStudentId.Keys)
             {
-                t.Add(new StudentFinalGrade
+                var studentClassDaysByStudentByPeriod = ClassRoomManagerDbContext.StudentClassDays
+                    .Include(scd => scd.ClassDay)
+                    .Where(scd => scd.StudentId == studentId && scd.ClassDay.PeriodId == periodId);
+
+
+                studentFinalGradeList.Add(new StudentFinalGrade
                 {
                     StudentId = studentId,
                     FinalGrade = activityAssignmentsGroupedByStudentId[studentId].Sum(aa => aa.Grade * aa.Activity.FinalEvaluationValue),
                     CreationDate = DateTimeOffset.Now,
                     ModificationDate = DateTimeOffset.Now,
                     PeriodId = periodId,
-                    Student = activityAssignmentsGroupedByStudentId[studentId].Select(aa => aa.Student).FirstOrDefault()
+                    Student = activityAssignmentsGroupedByStudentId[studentId].Select(aa => aa.Student).FirstOrDefault(),
+                    AssistanceSummary = $"{studentClassDaysByStudentByPeriod.Where(scd => scd.Assistance == true).Count()}/{studentClassDaysByStudentByPeriod.Count()}"
                 });
             }
 
-            return t;
+            return studentFinalGradeList;
         }
     }
 }
