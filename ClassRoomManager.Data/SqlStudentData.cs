@@ -152,7 +152,7 @@ namespace ClassRoomManager.Repositories
                 studentFinalGradeList.Add(new StudentFinalGrade
                 {
                     StudentId = studentId,
-                    FinalGrade = activityAssignmentsGroupedByStudentId[studentId].Sum(aa => aa.Grade * aa.Activity.FinalEvaluationValue),
+                    FinalGrade = activityAssignmentsGroupedByStudentId[studentId].Sum(aa => aa.Grade * aa.Activity.FinalEvaluationValue) / 10,
                     CreationDate = DateTimeOffset.Now,
                     ModificationDate = DateTimeOffset.Now,
                     PeriodId = periodId,

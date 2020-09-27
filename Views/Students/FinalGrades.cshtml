@@ -1,18 +1,21 @@
-﻿@model IEnumerable<StudentFinalGrade>
+﻿@model FinalGradesViewModel
 
 <h1>Calificacion Final</h1>
 
-<select>
-    <optgroup label="Periodos"></optgroup>
-    <option>periodo 1</option>
-    <option>periodo 2</option>
-</select>
+<form asp-action="FinalGrades" method="get">
+    <select name="periodId">
+        <optgroup label="Periodos"></optgroup>
+        <option value="1">periodo 1</option>
+        <option value="2">periodo 2</option>
+    </select>
 
-<select>
-    <optgroup label="Grupos"></optgroup>
-    <option>Grupo 1</option>
-    <option>Grupo 2</option>
-</select>
+    <select name="groupId">
+        <optgroup label="Grupos"></optgroup>
+        <option value="1">Grupo 1</option>
+        <option value="2">Grupo 2</option>
+    </select>
+    <button type="submit">Filtrar</button>
+</form>
 
 <form asp-action="FinalGrades">
     <table>
@@ -25,14 +28,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var studentFinalGrade in Model)
+            @for (int i = 0; i < Model.StudentFinalGrades.Length; i++)
             {
-                <tr data-student-id="@studentFinalGrade.StudentId">
-                    <td>@studentFinalGrade.Student.Name</td>
-                    <td>@studentFinalGrade.AssistanceSummary</td>
-                    <td>@studentFinalGrade.ActivitiesSummary</td>
+                <tr>
+                    <td>@Model.StudentFinalGrades[i].Student.Name</td>
+                    <td>@Model.StudentFinalGrades[i].AssistanceSummary</td>
+                    <td>@Model.StudentFinalGrades[i].ActivitiesSummary</td>
                     <td>
-                        <input type="number" min="1" max="10" value="@studentFinalGrade.FinalGrade.ToString("F2")"/>
+                        <input type="number" min="1" max="10" value="@Model.StudentFinalGrades[i].FinalGrade.ToString("F2")" name="studentFinalGrades[@i].finalGrade" />
+                        <input type="hidden" value="@Model.StudentFinalGrades[i].StudentId" name="studentFinalGrades[@i].studentId" />
+                        <input type="hidden" value="@Model.PeriodId" name="studentFinalGrades[@i].periodId" />
                     </td>
                 </tr>
             }

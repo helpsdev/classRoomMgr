@@ -30,7 +30,23 @@ namespace ClassRoomManager.Controllers
 
         public IActionResult FinalGrades(int? periodId, int? groupId)
         {
-            return View(StudentData.GetAllStudentFinalGrades(1));
+            var finalGradesViewModel = new FinalGradesViewModel{
+                PeriodId = periodId.GetValueOrDefault(),
+                StudentFinalGrades = StudentData.GetAllStudentFinalGrades(periodId.GetValueOrDefault()).ToArray()
+            };
+
+            return View(finalGradesViewModel);
+        }
+
+        [HttpPost]
+        public IActionResult FinalGrades(int? periodId, IEnumerable<StudentFinalGrade> studentFinalGrades)
+        {
+            if (ModelState.IsValid)
+            {
+                /*Persist studentFinalGrades*/
+            }
+
+            return RedirectToAction(nameof(FinalGrades), new { periodId });
         }
     }
 }
