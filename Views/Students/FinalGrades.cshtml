@@ -27,7 +27,7 @@
         <tbody>
             @foreach (var studentFinalGrade in Model)
             {
-                <tr>
+                <tr data-student-id="@studentFinalGrade.StudentId">
                     <td>@studentFinalGrade.Student.Name</td>
                     <td>@studentFinalGrade.AssistanceSummary</td>
                     <td>@studentFinalGrade.ActivitiesSummary</td>
