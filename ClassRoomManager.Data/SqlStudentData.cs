@@ -164,5 +164,16 @@ namespace ClassRoomManager.Repositories
 
             return studentFinalGradeList;
         }
+
+        public int AddStudentFinalGrade(IEnumerable<StudentFinalGrade> studentFinalGrades)
+        {
+            foreach (var studentFinalGrade in studentFinalGrades)
+            {
+                studentFinalGrade.CreationDate =
+                    studentFinalGrade.ModificationDate = DateTimeOffset.Now;
+            }
+            ClassRoomManagerDbContext.StudentFinalGrades.AddRange(studentFinalGrades);
+            return ClassRoomManagerDbContext.SaveChanges();
+        }
     }
 }

@@ -41,9 +41,16 @@ namespace ClassRoomManager.Controllers
         [HttpPost]
         public IActionResult FinalGrades(int? periodId, IEnumerable<StudentFinalGrade> studentFinalGrades)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && studentFinalGrades.Count() > 0)
             {
-                /*Persist studentFinalGrades*/
+                try
+                {
+                    StudentData.AddStudentFinalGrade(studentFinalGrades);
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction(nameof(FinalGrades), new { periodId });
+                }
             }
 
             return RedirectToAction(nameof(FinalGrades), new { periodId });

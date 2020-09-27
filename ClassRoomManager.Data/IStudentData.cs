@@ -16,5 +16,6 @@ namespace ClassRoomManager.Repositories
         ICollection<StudentClassDay> GetStudentClassDaysByStudentId(int studentId);
         ClassDay GetTodayClassDay();
         ICollection<StudentFinalGrade> GetAllStudentFinalGrades(int periodId);
+        int AddStudentFinalGrade(IEnumerable<StudentFinalGrade> studentFinalGrades);
     }
 }
